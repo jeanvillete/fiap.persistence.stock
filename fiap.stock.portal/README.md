@@ -130,7 +130,9 @@ GET portal/users/5ef958b02994931e98c15366/products/PRD-9876543
 - a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId***
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
-        
+- o resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
+    - ***code*** (código gerido internamente)
+
 ```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses -d '{ "zip_code": "123456-789", "complement": "Cond Azul, Bl A Apt 123", "city": "São Paulo", "state": "São Paulo", "country": "Brasil" }' -H 'Content-Type: application/json' ```
 
 ```
@@ -146,7 +148,60 @@ POST portal/users/5ef958b02994931e98c15366/addresses
 
 [response]
 201 Created
-5ff958bGH994931e98c15364
+{
+    "code": "5ff958bGH994931e98c15364",
+    "zip_code": "123456-789",
+    "complement": "Cond Azul, Bl A Apt 123",
+    "city": "São Paulo",
+    "state": "São Paulo",
+    "country": "Brasil"
+}
+```
+
+---
+
+#### 2.5 - [use case: lista todos os registros de endereço para o cliente]
+- lista todos os registros de endereço para o cliente
+- payload com os dados;
+    - ***code*** (código gerido internamente)
+    - ***zipCode***
+    - ***complement***
+    - ***city***
+    - ***state***
+    - ***country***
+- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+    - ***loginId***
+        - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
+        - [validar] a listagem só pode trazer registros de endereços específicos do usuário corrente
+        
+```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364 -H 'Content-Type: application/json' ```
+
+```
+[request]
+GET portal/users/5ef958b02994931e98c15366/addresses/5ff958bGH994931e98c15364
+
+[response]
+200 Ok
+{
+    "addresses": [
+        {
+            "code": "5ff958bGH994931e98c15364",
+            "zip_code": "123456-789",
+            "complement": "Cond Azul, Bl A Apt 123",
+            "city": "São Paulo",
+            "state": "São Paulo",
+            "country": "Brasil"
+        },
+        {
+            "code": "5GG958bGH994931e98c14253",
+            "zip_code": "654321-987",
+            "complement": "Rua Santos, Nr 49",
+            "city": "Sorocaba",
+            "state": "São Paulo",
+            "country": "Brasil"
+        }
+    ]
+}
 ```
 
 ---
