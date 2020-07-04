@@ -25,7 +25,7 @@ As definições de propriedades e configurações de porta ***(atual 8181)*** do
 
 #### 1.2 - domínios
 
-###### ***User***
+##### ***[User]***
 O único domínio presente neste módulo é o User, que gerencia as informações;
 - ***login*** campo mandatório, 4 caracteres alfabéticos em minúsculo
 - ***type*** (enum UserType[customer|stock]) campo mandatório, deve ter um dos dois valores; stock, customer

@@ -25,6 +25,56 @@ as definições de propriedades e configurações de porta ***(atual 8282)*** do
 
 ---
 
+#### 1.2 - domínios
+
+##### ***[Catalog]***
+O catálogo é gerenciado apenas pelo usuário estoquista.
+Este domínio tem por objetivo simplesmente agrupar a descrição comum de produtos, que forma de fato o catálogo do estoque.  
+No projeto este catalogo tem um relacionamento **um para muitos (1,N)** com os produtos
+- ***login_id*** campo mandatório, 25 caracteres alfanuméricos que identifica o usuário estoquista que fez o registro no catálogo
+- ***description*** campo mandatório, varchar com no máximo 50 caracteres
+Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenhum reflexo em cache.
+
+#
+
+##### ***[Product]***
+O produto é gerenciado apenas pelo usuário estoquista.
+O domínio produto é o lado N do relacionamento **muitos para um (N,1)** com o catálogo.
+O domínio produto gerencia na sua tabela os dados;
+- ***login_id*** campo mandatório, 25 caracteres alfanuméricos que identifica o usuário estoquista que fez o registro nos produtos
+- ***catalog_id*** chave estrangeira do catálogo
+- ***code*** o campo é calculado pelo aplicação quando inserir um produto, é formado pelo prefixo **"PRD-"** e 7 digitos (apenas números)
+- ***price*** campo mandatório, com valor real, ou seja com ponto flutuante
+- ***quantity*** campo mandatório, campo inteiro
+- ***entry_date*** campo calculado e persistido no insert do produto
+Este domínio é persistido permanentemente na base de dados **MySQL**, e é gerido no cache afim de ser encontrado rapidamente por ***code***, com operações PUT, EVICT e um TTL de **5min**, cache mantido através do **Spring Cache com Redis**.
+
+#
+
+##### ***[OrderProduct]***
+O domínio pedido tem um relacionamento **muitos para muitos (N,N)** com o domínio de produtos, e para isto uma tabela relacional teve que ser estipulada para representar este relacionamento.
+Este relacionamento foi descrito como **OrderProduct**, e detém os dados;
+- ***product_id*** chave estrangeira para o domínio de produto
+- ***order_id*** chave estrangeira para o domínio de pedido
+- ***quantity*** campo mandatório, identifica num pedido qual a quantidade se deseja para um produto
+
+#
+
+##### ***[Order]***
+> **[já mencionado acima]** O domínio pedido tem um relacionamento **muitos para muitos (N,N)** com o domínio de produtos, e para isto uma tabela relacional teve que ser estipulada para representar este relacionamento.  
+
+O pedido é inserido por um usuário cliente, mas é mantido pelo estoquista para aprovação ou reprovação do pedido no estoque.  
+O domínio pedido gerencia na sua tabela os dados;
+- ***login_id*** campo mandatório, 25 caracteres alfanuméricos que identifica o usuário estoquista que fez o registro nos produtos
+- ***code*** é formado pelo prefixo **"ORD-"** e 7 digitos (apenas números)
+- ***status*** (enum OrderStatus[WAITING_FOR_ANSWER, APPROVED, REJECTED]), nasce sempre como **WAITING_FOR_ANSWER**
+    - WAITING_FOR_ANSWER aguardando conferência do estoquista
+    - APPROVED aprovado no estoque
+    - REJECTED reprovado no estoque
+Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenhum reflexo em cache.
+
+---
+
 # 2 - casos de uso e seus endpoints [use case]
 
 abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
