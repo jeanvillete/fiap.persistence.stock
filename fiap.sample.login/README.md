@@ -10,7 +10,6 @@
 
 as definições de propriedades e configurações de porta ***(atual 8181)*** do servidor da aplicação corrente, do banco de dados **MongoDB** e **Redis** estão no artefato ```application.yml```
 
-
 **MongoDB**
 
     host: localhost
