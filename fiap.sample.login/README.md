@@ -61,7 +61,7 @@ PUT /login
 5ef958b02994931e98c15366
 ```
 
----
+#
 
 #### 2.2 - [use case: fazer login]
 - Para fazer login, basta que seja fornecido como path variable os dados type e login
@@ -80,4 +80,4 @@ GET /login/stock/abcd
 5ef958b02994931e98c15366
 ```
 
----
+#

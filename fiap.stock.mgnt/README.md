@@ -111,7 +111,7 @@ PUT stock/users/5ef958b02994931e98c15366/catalogs
 }
 ```
 
----
+#
 
 #### 2.2 - [use case: estoquista adiciona um produto]
 - um produto tem um relancionamento **muitos para um (N,1)** com o domínio de catálogo
@@ -149,7 +149,7 @@ PUT stock/users/5ef958b02994931e98c15366/products
 }
 ```
 
----
+#
 
 #### 2.3 - [use case: cliente adiciona um pedido]
 - a adição de um pedido vem de uma requisição que chega do módulo ***fiap.stock.portal***
@@ -197,7 +197,7 @@ PUT stock/users/5ef9589c2994931e98c15365/orders
 }
 ```
 
----
+#
 
 #### 2.4 - [use case: estoquista lista pedidos]
 - estoquista requisita listagem de pedidos persistidos
@@ -229,7 +229,7 @@ GET stock/users/5ef958b02994931e98c15366/orders
 }
 ```
 
----
+#
 
 #### 2.5 - [use case: estoquista confirma um pedido]
 - o estoquista seleciona um item da lista de pedidos, e **confirma/aprova** a presença deste no estoque, indicando que a compra/pedido deve continuar seu fluxo
@@ -262,7 +262,7 @@ PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/aprove
 }
 ```
 
----
+#
 
 #### 2.6 - [use case: estoquista rejeita um pedido]
 - o estoquista seleciona um item da lista de pedidos, e **rejeita** a presença deste no estoque, indicando que a compra/pedido deve ser cancelada
@@ -292,4 +292,4 @@ PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/reject
 }
 ```
 
----
+#

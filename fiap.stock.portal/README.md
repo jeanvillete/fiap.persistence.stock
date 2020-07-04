@@ -58,7 +58,7 @@ POST portal/users/5ef958b02994931e98c15366/products
 5ef958b02994931e98c15366
 ```
 
----
+#
 
 #### 2.2 - [use case: lista produtos no portal, acessível a estoquista ou cliente]
 - carregar toda a lista de produtos registrada no **fiap.stock.portal**
@@ -91,7 +91,7 @@ GET portal/users/5ef958b02994931e98c15366/products
 }
 ```
 
----
+#
 
 #### 2.3 - [use case: carrega determinado produto baseado no seu code, acessível a estoquista ou cliente]
 - carregar todos os dados de um domínio Produto, baseado no seu code
@@ -117,7 +117,7 @@ GET portal/users/5ef958b02994931e98c15366/products/PRD-9876543
 }
 ```
 
----
+#
 
 #### 2.4 - [use case: adiciona um registro de endereço para o cliente]
 - adiciona um registro de endereço para um cliente
@@ -158,7 +158,7 @@ POST portal/users/5ef9589c2994931e98c15365/addresses
 }
 ```
 
----
+#
 
 #### 2.5 - [use case: lista todos os registros de endereço para o cliente]
 - lista todos os registros de endereço para o cliente
@@ -204,7 +204,7 @@ GET portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
 }
 ```
 
----
+#
 
 #### 2.6 - [use case: remoção de um registro de endereço para o cliente]
 - remoção de um registro de endereço para o cliente
@@ -226,7 +226,7 @@ DELETE portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
 200 Ok
 ```
 
----
+#
 
 #### 2.7 - [use case: cliente adiciona um pedido]
 - adição de novo pedido para o cliente corrente
@@ -295,7 +295,7 @@ POST portal/users/5ef9589c2994931e98c15365/orders
 }
 ```
 
----
+#
 
 #### 2.8 - [use case: cliente solicita listagem de todos seus pedidos já efetuados]
 - cliente deve ter a capacidade de listar todos os pedidos efetuados, independentemente de seus status/estados;
@@ -362,4 +362,4 @@ GET portal/users/5ef9589c2994931e98c15365/orders
 }
 ```
 
----
+#
