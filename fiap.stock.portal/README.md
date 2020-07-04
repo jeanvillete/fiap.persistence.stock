@@ -242,7 +242,7 @@ DELETE portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
         - é formado pelo prefixo **"ORD-"** e 7 digitos (apenas números)
 - [IMPORTANTE] ao inserir um pedido no módulo **fiap.stock.portal** é necessário que este dispare uma requisição para o **fiap.stock.mgnt** com os dados deste pedido, para que este pedido chegue na fila do estoquista, e lá este confirmará ou rejeitará o pedido.
 
-```$ curl -X DELETE localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364 ```
+```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/orders -d '{ "products: [ { "code": "PRD-9876543", "quantity": 10 }, { "code": "PRD-654987", "quantity": 5 } ], "address": { "code": "5GG958bGH994931e98c14253", "zip_code": "654321-987", "complement": "Rua Santos, Nr 49", "city": "Sorocaba", "state": "São Paulo", "country": "Brasil" } }' -H 'Content-Type: application/json' ```
 
 ```
 [request]
@@ -292,6 +292,73 @@ POST portal/users/5ef9589c2994931e98c15365/orders
        "state": "São Paulo",
        "country": "Brasil"
    }
+}
+```
+
+---
+
+#### 2.8 - [use case: cliente solicita listagem de todos seus pedidos já efetuados]
+- cliente deve ter a capacidade de listar todos os pedidos efetuados, independentemente de seus status/estados;
+    - WAITING_FOR_ANSWER aguardando conferência do estoquista
+    - APPROVED aprovado no estoque
+    - REJECTED reprovado no estoque
+- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+    - ***loginId***
+        - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
+
+```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/orders ```
+
+```
+[request]
+GET portal/users/5ef9589c2994931e98c15365/orders
+
+[response]
+200 Ok
+{
+    "orders": [
+        {
+            "code": "ORD-4569877",
+            "entry_date": "2019-01-29T05:18:56",
+            "status": "WAITING_FOR_ANSWER",
+            "products: [
+                {
+                    "code": "PRD-9876543",
+                    "quantity": 10
+                },
+                {
+                    "code": "PRD-654987",
+                    "quantity": 5
+                }
+            ],
+            "address": {
+               "code": "5GG958bGH994931e98c14253",
+               "zip_code": "654321-987",
+               "complement": "Rua Santos, Nr 49",
+               "city": "Sorocaba",
+               "state": "São Paulo",
+               "country": "Brasil"
+           }
+        },
+        {
+            "code": "ORD-1122336",
+            "entry_date": "2018-10-03T17:23:46",
+            "status": "APPROVED",
+            "products: [
+                {
+                    "code": "PRD-1122331",
+                    "quantity": 1
+                }
+            ],
+            "address": {
+               "code": "5ff958bGH994931e98c15364",
+               "zip_code": "123456-789",
+               "complement": "Cond Azul, Bl A Apt 123",
+               "city": "São Paulo",
+               "state": "São Paulo",
+               "country": "Brasil"
+           }
+        }
+    ]
 }
 ```
 
