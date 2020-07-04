@@ -24,6 +24,48 @@ as definições de propriedades e configurações de porta ***(atual 8383)*** do
 
 ---
 
+#### 1.2 - domínios
+
+##### ***[portal: Product]***
+O domínio produto, mesmo no módulo **fiap.stock.portal** é gerenciado apenas pelo usuário estoquista, pois na verdade depende de uma ação que veio de uma interação no módulo **fiap.stock.mgnt**.  
+No portal, as informações de um documento de uma coleção é sumarizado trazido das informações tabular no **fiap.stock.mgnt**.  
+O documento aqui armezenado retém e apresenta os dados;
+- ***login_id*** campo mandatório, 25 caracteres alfanuméricos que identifica o usuário estoquista que fez o registro nos produtos
+- ***code*** 
+- ***price*** 
+- ***quantity*** 
+- ***description*** definido no catálogo do estoque, mantido apenas no módulo **fiap.stock.mgnt**
+  
+Este domínio é persistido permanentemente na base de dados **MongoDB**, e é gerido no cache afim de ser buscado rapidamente por ***code***, com operações PUT, EVICT e um TTL de **2min**, cache mantido através do **Spring Cache com Redis**.
+
+#
+
+##### ***[portal: Address]***
+O documento para o domínio de endereço detém os dados;
+- ***login_id*** campo mandatório, 25 caracteres alfanuméricos que identifica o usuário cliente que faz o cadastro de um endereço para si
+- ***zipCode***
+- ***complement***
+- ***city***
+- ***state***
+- ***country***
+
+Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenhum reflexo/gerencia em cache.
+
+#
+
+##### ***[portal: Order]***
+O documento para o domínio de pedidos, desnormalizado detém os dados;
+- ***login_id*** campo mandatório, 25 caracteres alfanuméricos que identifica o usuário cliente que faz o pedido
+- ***code*** gerido e fornecido pelo módulo, é formado pelo prefixo **"ORD-"** e 7 digitos (apenas números)
+- ***entryDate*** data inferida no momento da inserção/persistência do pedido
+- ***status*** status do pedido junto ao estoque
+- ***products*** lista de produtos selecionados no pedido, com os códigos e quantidades dos produtos
+- ***address*** endereço de entrega
+
+Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenhum reflexo/gerencia em cache.
+
+---
+
 # 2 - casos de uso e seus endpoints [use case]
 
 abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
