@@ -93,7 +93,7 @@ GET portal/users/5ef958b02994931e98c15366/products
 
 ---
 
-#### 2.2 - [use case: carrega determinado produto baseado no seu code, acessível a estoquista ou cliente]
+#### 2.3 - [use case: carrega determinado produto baseado no seu code, acessível a estoquista ou cliente]
 - carregar todos os dados de um domínio Produto, baseado no seu code
 - dados do produto;
     - ***code***
@@ -115,6 +115,38 @@ GET portal/users/5ef958b02994931e98c15366/products/PRD-9876543
     "price": 253.63,
     "quantity": 24
 }
+```
+
+---
+
+#### 2.4 - [use case: adiciona um registro de endereço para o cliente]
+- adiciona um registro de endereço para um cliente
+- payload com os dados;
+    - ***zipCode***
+    - ***complement***
+    - ***city***
+    - ***state***
+    - ***country***
+- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+    - ***loginId***
+        - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
+        
+```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses -d '{ "zip_code": "123456-789", "complement": "Cond Azul, Bl A Apt 123", "city": "São Paulo", "state": "São Paulo", "country": "Brasil" }' -H 'Content-Type: application/json' ```
+
+```
+[request]
+POST portal/users/5ef958b02994931e98c15366/addresses
+{
+    "zip_code": "123456-789",
+    "complement": "Cond Azul, Bl A Apt 123",
+    "city": "São Paulo",
+    "state": "São Paulo",
+    "country": "Brasil"
+}
+
+[response]
+201 Created
+5ff958bGH994931e98c15364
 ```
 
 ---
