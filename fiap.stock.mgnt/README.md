@@ -103,6 +103,9 @@ PUT stock/users/5ef958b02994931e98c15366/products
 - o domínio de pedido tem um relacionamento **muitos para muitos (N,N)** com produtos
 - como a requisição que vem do módulo ***fiap.stock.portal*** tem uma lista dos códigos dos produtos, devemos então buscar pelos produtos correspondentes na base local **MySQL** antes de efetivar a persistência do objeto deserializado
 - o payload na requisição é composto dos campos
+    - ***code*** (campo obrigatório) gerido e fornecido pelo módulo ***fiap.stock.portal***
+        - é formado pelo prefixo **"ORD-"** e 7 digitos (apenas números)
+        - do lado do módulo **fiap.stock.mgnt**, deve apenas confirmar que não existe um outro produto já com este código para o mesmo usuário, ou seja, ***loginId*** (UserType) 'customer'
     - ***products[].code*** (campo mandatório) um array de objetos com campo ***code***, que deve corresponder ao ***code*** do domínio ***Product*** da base local **MySQL** do módulo corrente
         - [validar] se não for encontrado o produto com o código fornecido, devolver mensagem informando o ocorrido com status ***400 Bad Request***
     - ***products[].quantity*** (campo mandatório) ainda no array supracitado, a quantidade desejada na compra/pedido, que deve ser menor ou igual a quantidade disponível
@@ -111,7 +114,6 @@ PUT stock/users/5ef958b02994931e98c15366/products
     - ***loginId*** (deve conter no máximo 25 caracteres, necessário para o tamaho de um _id do MongoDB, que é de onde vem esta informação), campo mandatório
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
 - o resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
-    - ***code*** o campo é calculado pelo aplicação quando inserir um pedido, é formado pelo prefixo **"ORD-"** e 7 digitos (apenas números)
 
 ```$ curl localhost:8282/stock/users/5ef9589c2994931e98c15365/orders -d '{ "products: [ { "code": "PRD-9876543", "quantity": "10" } ] }' -H 'Content-Type: application/json' ```
 
@@ -119,10 +121,11 @@ PUT stock/users/5ef958b02994931e98c15366/products
 [request]
 PUT stock/users/5ef9589c2994931e98c15365/orders
 {
+    "code": "ORD-4569877",
     "products: [
         {
             "code": "PRD-9876543",
-            "quantity": "10"
+            "quantity": 10
         }
     ]
 }
@@ -134,7 +137,7 @@ PUT stock/users/5ef9589c2994931e98c15365/orders
     "products: [
         {
             "code": "PRD-9876543",
-            "quantity": "10"
+            "quantity": 10
         }
     ],
     "status": "WAITING_FOR_ANSWER"
@@ -164,7 +167,7 @@ GET stock/users/5ef958b02994931e98c15366/orders
             "products: [
                 {
                     "code": "PRD-9876543",
-                    "quantity": "10"
+                    "quantity": 10
                 }
             ],
             "status": "WAITING_FOR_ANSWER"
@@ -199,7 +202,7 @@ PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/aprove
     "products: [
         {
             "code": "PRD-9876543",
-            "quantity": "10"
+            "quantity": 10
         }
     ],
     "status": "APPROVED"
@@ -229,7 +232,7 @@ PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/reject
     "products: [
         {
             "code": "PRD-9876543",
-            "quantity": "10"
+            "quantity": 10
         }
     ],
     "status": "REJECTED"

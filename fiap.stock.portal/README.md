@@ -137,7 +137,7 @@ GET portal/users/5ef958b02994931e98c15366/products/PRD-9876543
 
 ```
 [request]
-POST portal/users/5ef958b02994931e98c15366/addresses
+POST portal/users/5ef9589c2994931e98c15365/addresses
 {
     "zip_code": "123456-789",
     "complement": "Cond Azul, Bl A Apt 123",
@@ -178,7 +178,7 @@ POST portal/users/5ef958b02994931e98c15366/addresses
 
 ```
 [request]
-GET portal/users/5ef958b02994931e98c15366/addresses/5ff958bGH994931e98c15364
+GET portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
 
 [response]
 200 Ok
@@ -220,10 +220,79 @@ GET portal/users/5ef958b02994931e98c15366/addresses/5ff958bGH994931e98c15364
 
 ```
 [request]
-DELETE portal/users/5ef958b02994931e98c15366/addresses/5ff958bGH994931e98c15364
+DELETE portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
 
 [response]
 200 Ok
+```
+
+---
+
+#### 2.7 - [use case: cliente adiciona um pedido]
+- adição de novo pedido para o cliente corrente
+- o payload na requisição é composto dos campos
+    - ***products[].code*** (campo mandatório) um array de objetos com campo ***code***, que deve corresponder ao ***code*** do domínio ***Product***
+    - ***products[].quantity*** (campo mandatório) ainda no array supracitado, a quantidade desejada na compra/pedido, que deve ser menor ou igual a quantidade disponível
+    - ***address*** deve ser um dos endereços já registrados no **fiap.stock.portal**
+- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+    - ***loginId***
+        - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
+- o resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
+    - ***code*** (campo obrigatório) gerido e fornecido pelo módulo
+        - é formado pelo prefixo **"ORD-"** e 7 digitos (apenas números)
+- [IMPORTANTE] ao inserir um pedido no módulo **fiap.stock.portal** é necessário que este dispare uma requisição para o **fiap.stock.mgnt** com os dados deste pedido, para que este pedido chegue na fila do estoquista, e lá este confirmará ou rejeitará o pedido.
+
+```$ curl -X DELETE localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364 ```
+
+```
+[request]
+POST portal/users/5ef9589c2994931e98c15365/orders
+{
+    "products: [
+        {
+            "code": "PRD-9876543",
+            "quantity": 10
+        },
+        {
+            "code": "PRD-654987",
+            "quantity": 5
+        }
+    ],
+    "address": {
+       "code": "5GG958bGH994931e98c14253",
+       "zip_code": "654321-987",
+       "complement": "Rua Santos, Nr 49",
+       "city": "Sorocaba",
+       "state": "São Paulo",
+       "country": "Brasil"
+   }
+}
+
+[response]
+201 Created
+{
+    "code": "ORD-4569877",
+    "entry_date": "2019-01-29T05:18:56",
+    "status": "WAITING_FOR_ANSWER",
+    "products: [
+        {
+            "code": "PRD-9876543",
+            "quantity": 10
+        },
+        {
+            "code": "PRD-654987",
+            "quantity": 5
+        }
+    ],
+    "address": {
+       "code": "5GG958bGH994931e98c14253",
+       "zip_code": "654321-987",
+       "complement": "Rua Santos, Nr 49",
+       "city": "Sorocaba",
+       "state": "São Paulo",
+       "country": "Brasil"
+   }
+}
 ```
 
 ---
