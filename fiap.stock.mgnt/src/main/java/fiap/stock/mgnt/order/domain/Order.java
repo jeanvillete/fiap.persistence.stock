@@ -13,6 +13,10 @@ public class Order {
     @Table(name = "stock_order_product")
     public static class OrderProduct {
 
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Integer id;
+
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(nullable = false, updatable = false, name = "stock_order_id")
         private Order order;

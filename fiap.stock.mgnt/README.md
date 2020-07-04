@@ -86,6 +86,9 @@ Abaixo segue a lista de casos de uso e exemplos de requisições e respostas;
 - O catálogo é o que retém a descrição dos produtos, logo tem uma relação **um para muitos (1,N)** com o domínio de produtos
 - A informação básica de um item do catálogo, para fins de mostrar relacionamento porém com simplicidade, é a sua descrição, logo esta informação deverá ser recuperada no corpo do payload
     - ***description*** (campo varchar com no máximo 50 caracteres), campo mandatório
+        - não pode ser nulo
+        - aplica trim e o resultado não pode ser vazio
+        - precisa ter entre 10 e 50 caracteres alfanuméricos
 - A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId*** (deve conter no máximo 25 caracteres, necessário para o tamaho de um _id do MongoDB, que é de onde vem esta informação), campo mandatório
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'stock'

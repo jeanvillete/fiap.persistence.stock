@@ -11,12 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserUseCase {
 
-    private final UserService userService;
-
-    public UserUseCase(UserService userService) {
-        this.userService = userService;
-    }
-
     public static class UserPayload {
         private String login;
         private String type;
@@ -36,6 +30,12 @@ public class UserUseCase {
         public void setType(String type) {
             this.type = type;
         }
+    }
+
+    private final UserService userService;
+
+    public UserUseCase(UserService userService) {
+        this.userService = userService;
     }
 
     public String createNewLogin(UserPayload userPayload) throws UserConflictException, InvalidSuppliedDataException {

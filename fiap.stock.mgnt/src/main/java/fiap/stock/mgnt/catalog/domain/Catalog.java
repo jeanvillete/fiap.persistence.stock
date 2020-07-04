@@ -16,4 +16,23 @@ public class Catalog {
     @Column(nullable = false, length = 50)
     private String description;
 
+    public Catalog() {
+    }
+
+    public Catalog(String loginId, String description) {
+        this.loginId = loginId;
+        this.description = description;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
