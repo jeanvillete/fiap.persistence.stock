@@ -33,6 +33,7 @@ Este domínio tem por objetivo simplesmente agrupar a descrição comum de produ
 No projeto este catalogo tem um relacionamento **um para muitos (1,N)** com os produtos
 - ***login_id*** campo mandatório, 25 caracteres alfanuméricos que identifica o usuário estoquista que fez o registro no catálogo
 - ***description*** campo mandatório, varchar com no máximo 50 caracteres
+  
 Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenhum reflexo em cache.
 
 #
@@ -47,6 +48,7 @@ O domínio produto gerencia na sua tabela os dados;
 - ***price*** campo mandatório, com valor real, ou seja com ponto flutuante
 - ***quantity*** campo mandatório, campo inteiro
 - ***entry_date*** campo calculado e persistido no insert do produto
+  
 Este domínio é persistido permanentemente na base de dados **MySQL**, e é gerido no cache afim de ser encontrado rapidamente por ***code***, com operações PUT, EVICT e um TTL de **5min**, cache mantido através do **Spring Cache com Redis**.
 
 #
@@ -70,7 +72,8 @@ O domínio pedido gerencia na sua tabela os dados;
 - ***status*** (enum OrderStatus[WAITING_FOR_ANSWER, APPROVED, REJECTED]), nasce sempre como **WAITING_FOR_ANSWER**
     - WAITING_FOR_ANSWER aguardando conferência do estoquista
     - APPROVED aprovado no estoque
-    - REJECTED reprovado no estoque
+    - REJECTED reprovado no estoque  
+    
 Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenhum reflexo em cache.
 
 ---
