@@ -68,20 +68,20 @@ Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenh
 
 # 2 - casos de uso e seus endpoints [use case]
 
-abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
+Abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
 
 #### 2.1 - [use case: estoquista adiciona/atualiza um produto ao portal]
-- o payload postado pelo estoquista através de uma ação no projeto **fiap.stock.mgnt** deve ser carregado no **fiap.stock.portal** com os mesmos dados, numa operação de ***UPSERT***, ou seja, se ainda não existe este produto no **fiap.stock.portal**, então este deve ser inserido, e caso exista, deve ser totalmente substituído/sobrescrito.
+- O payload postado pelo estoquista através de uma ação no projeto **fiap.stock.mgnt** deve ser carregado no **fiap.stock.portal** com os mesmos dados, numa operação de ***UPSERT***, ou seja, se ainda não existe este produto no **fiap.stock.portal**, então este deve ser inserido, e caso exista, deve ser totalmente substituído/sobrescrito.
     - para fazer a validação de ***UPSERT***, é necessário logicamente procurar por um produto com o mesmo ***code***, então inferir se deve ser inserido ou sobrescrito.
-- as informações esperadas para um domínio Produto no **fiap.stock.portal** são;
+- As informações esperadas para um domínio Produto no **fiap.stock.portal** são;
     - ***code***
     - ***description***
     - ***price***
     - ***quantity***
-- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+- A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId***
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'stock'
-- caso registro armazenado com sucesso, devolver resposta com corpo completo e status ***201 Created***
+- Caso registro armazenado com sucesso, devolver resposta com corpo completo e status ***201 Created***
 
 ```$ curl localhost:8383/portal/users/5ef958b02994931e98c15366/products -d '{ "code": "PRD-9876543", "description": "sample product description", "price": 253.63, "quantity": 24 }' -H 'Content-Type: application/json' ```
 
@@ -103,8 +103,8 @@ POST portal/users/5ef958b02994931e98c15366/products
 #
 
 #### 2.2 - [use case: lista produtos no portal, acessível a estoquista ou cliente]
-- carregar toda a lista de produtos registrada no **fiap.stock.portal**
-- os dados carregados no payload para o domínio Produto devem ser;
+- Carregar toda a lista de produtos registrada no **fiap.stock.portal**
+- Os dados carregados no payload para o domínio Produto devem ser;
     - ***code***
     - ***description***
     - ***price***
@@ -136,8 +136,8 @@ GET portal/users/5ef958b02994931e98c15366/products
 #
 
 #### 2.3 - [use case: carrega determinado produto baseado no seu code, acessível a estoquista ou cliente]
-- carregar todos os dados de um domínio Produto, baseado no seu code
-- dados do produto;
+- Carregar todos os dados de um domínio Produto, baseado no seu code
+- Dados do produto;
     - ***code***
     - ***description***
     - ***price***
@@ -162,17 +162,17 @@ GET portal/users/5ef958b02994931e98c15366/products/PRD-9876543
 #
 
 #### 2.4 - [use case: adiciona um registro de endereço para o cliente]
-- adiciona um registro de endereço para um cliente
-- payload com os dados;
+- Adiciona um registro de endereço para um cliente
+- Payload com os dados;
     - ***zipCode***
     - ***complement***
     - ***city***
     - ***state***
     - ***country***
-- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+- A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId***
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
-- o resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
+- O resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
     - ***code*** (código gerido internamente)
 
 ```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses -d '{ "zip_code": "123456-789", "complement": "Cond Azul, Bl A Apt 123", "city": "São Paulo", "state": "São Paulo", "country": "Brasil" }' -H 'Content-Type: application/json' ```
@@ -203,15 +203,15 @@ POST portal/users/5ef9589c2994931e98c15365/addresses
 #
 
 #### 2.5 - [use case: lista todos os registros de endereço para o cliente]
-- lista todos os registros de endereço para o cliente
-- payload com os dados;
+- Lista todos os registros de endereço para o cliente
+- Payload com os dados;
     - ***code*** (código gerido internamente)
     - ***zipCode***
     - ***complement***
     - ***city***
     - ***state***
     - ***country***
-- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+- A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId***
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
         - [validar] a listagem só pode trazer registros de endereços específicos do usuário corrente, logo deve estar na clausula de acesso ao registro persistido
@@ -249,11 +249,11 @@ GET portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
 #
 
 #### 2.6 - [use case: remoção de um registro de endereço para o cliente]
-- remoção de um registro de endereço para o cliente
-- a identificação do registro de endereço a ser removido deve ser fornecido via path variable
-- payload com os dados;
+- Remoção de um registro de endereço para o cliente
+- A identificação do registro de endereço a ser removido deve ser fornecido via path variable
+- Payload com os dados;
     - ***code***
-- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+- A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId***
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
         - [validar] a listagem só pode acessar registro de endereços específicos do usuário corrente, logo deve estar na clausula de acesso ao registro persistido
@@ -271,15 +271,15 @@ DELETE portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
 #
 
 #### 2.7 - [use case: cliente adiciona um pedido]
-- adição de novo pedido para o cliente corrente
-- o payload na requisição é composto dos campos
+- Adição de novo pedido para o cliente corrente
+- O payload na requisição é composto dos campos
     - ***products[].code*** (campo mandatório) um array de objetos com campo ***code***, que deve corresponder ao ***code*** do domínio ***Product***
     - ***products[].quantity*** (campo mandatório) ainda no array supracitado, a quantidade desejada na compra/pedido, que deve ser menor ou igual a quantidade disponível
     - ***address*** deve ser um dos endereços já registrados no **fiap.stock.portal**
-- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+- A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId***
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
-- o resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
+- O resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
     - ***code*** (campo obrigatório) gerido e fornecido pelo módulo
         - é formado pelo prefixo **"ORD-"** e 7 digitos (apenas números)
 - [IMPORTANTE] ao inserir um pedido no módulo **fiap.stock.portal** é necessário que este dispare uma requisição para o **fiap.stock.mgnt** com os dados deste pedido, para que este pedido chegue na fila do estoquista, e lá este confirmará ou rejeitará o pedido.
@@ -340,11 +340,11 @@ POST portal/users/5ef9589c2994931e98c15365/orders
 #
 
 #### 2.8 - [use case: cliente solicita listagem de todos seus pedidos já efetuados]
-- cliente deve ter a capacidade de listar todos os pedidos efetuados, independentemente de seus status/estados;
+- Cliente deve ter a capacidade de listar todos os pedidos efetuados, independentemente de seus status/estados;
     - WAITING_FOR_ANSWER aguardando conferência do estoquista
     - APPROVED aprovado no estoque
     - REJECTED reprovado no estoque
-- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+- A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId***
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
 
