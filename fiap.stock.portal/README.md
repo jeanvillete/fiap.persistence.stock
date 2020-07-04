@@ -172,7 +172,7 @@ POST portal/users/5ef958b02994931e98c15366/addresses
 - a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId***
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
-        - [validar] a listagem só pode trazer registros de endereços específicos do usuário corrente
+        - [validar] a listagem só pode trazer registros de endereços específicos do usuário corrente, logo deve estar na clausula de acesso ao registro persistido
         
 ```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364 -H 'Content-Type: application/json' ```
 
@@ -202,6 +202,28 @@ GET portal/users/5ef958b02994931e98c15366/addresses/5ff958bGH994931e98c15364
         }
     ]
 }
+```
+
+---
+
+#### 2.6 - [use case: remoção de um registro de endereço para o cliente]
+- remoção de um registro de endereço para o cliente
+- a identificação do registro de endereço a ser removido deve ser fornecido via path variable
+- payload com os dados;
+    - ***code***
+- a informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do cliente (UserType customer), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
+    - ***loginId***
+        - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
+        - [validar] a listagem só pode acessar registro de endereços específicos do usuário corrente, logo deve estar na clausula de acesso ao registro persistido
+        
+```$ curl -X DELETE localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364 ```
+
+```
+[request]
+DELETE portal/users/5ef958b02994931e98c15366/addresses/5ff958bGH994931e98c15364
+
+[response]
+200 Ok
 ```
 
 ---
