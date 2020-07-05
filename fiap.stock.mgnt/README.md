@@ -173,16 +173,16 @@ POST stock/users/5ef958b02994931e98c15366/catalogs/123/products
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
 - O resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
 
-```$ curl localhost:8282/stock/users/5ef9589c2994931e98c15365/orders -d '{ "products: [ { "code": "PRD-9876543", "quantity": "10" } ] }' -H 'Content-Type: application/json' ```
+```$ curl localhost:8282/stock/users/5ef9589c2994931e98c15365/orders -d '{"code": "ORD-4569877", "products": [{"code": "PRD-1234567", "quantity": 10}]}' -H 'Content-Type: application/json' ```
 
 ```
 [request]
 POST stock/users/5ef9589c2994931e98c15365/orders
 {
     "code": "ORD-4569877",
-    "products: [
+    "products": [
         {
-            "code": "PRD-9876543",
+            "code": "PRD-1234567",
             "quantity": 10
         }
     ]
@@ -192,9 +192,9 @@ POST stock/users/5ef9589c2994931e98c15365/orders
 201 Created
 {
     "code": "ORD-4569877",
-    "products: [
+    "products": [
         {
-            "code": "PRD-9876543",
+            "code": "PRD-1234567",
             "quantity": 10
         }
     ],

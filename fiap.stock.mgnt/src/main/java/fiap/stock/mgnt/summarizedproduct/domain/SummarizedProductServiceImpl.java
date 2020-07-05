@@ -1,8 +1,8 @@
 package fiap.stock.mgnt.summarizedproduct.domain;
 
 import fiap.stock.mgnt.common.exception.InvalidSuppliedDataException;
-import fiap.stock.mgnt.order.domain.OrderService;
 import fiap.stock.mgnt.product.domain.Product;
+import fiap.stock.mgnt.product.domain.ProductService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,11 +15,11 @@ import java.util.Objects;
 @Service
 class SummarizedProductServiceImpl implements SummarizedProductService {
 
-    private final OrderService orderService;
+    private final ProductService productService;
     private final String stockPortalBaseDomain;
 
-    SummarizedProductServiceImpl(OrderService orderService, @Value("${stock.portal.host}") String stockPortalBaseDomain) {
-        this.orderService = orderService;
+    SummarizedProductServiceImpl(ProductService productService, @Value("${stock.portal.host}") String stockPortalBaseDomain) {
+        this.productService = productService;
         this.stockPortalBaseDomain = stockPortalBaseDomain;
     }
 
@@ -32,14 +32,13 @@ class SummarizedProductServiceImpl implements SummarizedProductService {
             throw new IllegalStateException("Products instance and its nested properties 'quantity', 'code', 'catalog' and 'price' cannot be neither null nor empty.");
         }
 
-        Integer quantityAlreadySold = orderService.sumApprovedOrdersForSpecificProduct(product);
-        Integer summarizedQuantity = product.getQuantity() - quantityAlreadySold;
+        Integer availableQuantity = productService.availableQuantity(product);
 
         return new SummarizedProduct(
                 product.getCode(),
                 product.getCatalog().getDescription(),
                 product.getPrice(),
-                summarizedQuantity
+                availableQuantity
         );
     }
 

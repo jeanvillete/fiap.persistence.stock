@@ -1,4 +1,4 @@
-package fiap.stock.mgnt.product.domain;
+package fiap.stock.mgnt.order.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-interface ProductRepository extends JpaRepository<Product, Integer> {
+interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    Optional<Product> findByCode(String code);
+    Optional<Integer> countByCode(String code);
 
 }

@@ -33,6 +33,14 @@ public class Product {
     @Column(nullable = false, name = "entry_time")
     private LocalDateTime entryTime;
 
+    public Product() {
+    }
+
+    public Product(String code, Integer quantity) {
+        this.code = code;
+        this.quantity = quantity;
+    }
+
     public Product(String loginId, Catalog catalog, String code, BigDecimal price, Integer quantity, LocalDateTime entryTime) {
         this.loginId = loginId;
         this.catalog = catalog;
