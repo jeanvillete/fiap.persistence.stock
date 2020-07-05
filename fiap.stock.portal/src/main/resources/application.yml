@@ -12,3 +12,7 @@ spring:
 
 logging:
   config: classpath:logback.xml
+
+stock:
+  mgnt:
+    host: http://localhost:8282/

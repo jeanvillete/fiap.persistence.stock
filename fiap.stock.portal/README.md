@@ -70,7 +70,7 @@ Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenh
 
 Abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
 
-#### 2.1 - [use case: estoquista adiciona/atualiza um produto ao portal]
+#### 2.1 - [use case: estoquista adiciona/atualiza um produto ao portal: DONE]
 - O payload postado pelo estoquista através de uma ação no projeto **fiap.stock.mgnt** deve ser carregado no **fiap.stock.portal** com os mesmos dados, numa operação de ***UPSERT***, ou seja, se ainda não existe este produto no **fiap.stock.portal**, então este deve ser inserido, e caso exista, deve ser totalmente substituído/sobrescrito.
     - para fazer a validação de ***UPSERT***, é necessário logicamente procurar por um produto com o mesmo ***code***, então inferir se deve ser inserido ou sobrescrito.
 - As informações esperadas para um domínio Produto no **fiap.stock.portal** são;
@@ -270,7 +270,7 @@ DELETE portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
 
 #
 
-#### 2.7 - [use case: cliente adiciona um pedido]
+#### 2.7 - [use case: cliente adiciona um pedido: DONE]
 - Adição de novo pedido para o cliente corrente
 - O payload na requisição é composto dos campos
     - ***products[].code*** (campo mandatório) um array de objetos com campo ***code***, que deve corresponder ao ***code*** do domínio ***Product***
@@ -284,25 +284,24 @@ DELETE portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
         - é formado pelo prefixo **"ORD-"** e 7 digitos (apenas números)
 - [IMPORTANTE] ao inserir um pedido no módulo **fiap.stock.portal** é necessário que este dispare uma requisição para o **fiap.stock.mgnt** com os dados deste pedido, para que este pedido chegue na fila do estoquista, e lá este confirmará ou rejeitará o pedido.
 
-```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/orders -d '{ "products: [ { "code": "PRD-9876543", "quantity": 10 }, { "code": "PRD-654987", "quantity": 5 } ], "address": { "code": "5GG958bGH994931e98c14253", "zip_code": "654321-987", "complement": "Rua Santos, Nr 49", "city": "Sorocaba", "state": "São Paulo", "country": "Brasil" } }' -H 'Content-Type: application/json' ```
+```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/orders -d '{ "products": [ { "code": "PRD-0000001", "quantity": 10 }, { "code": "PRD-0000002", "quantity": 5 } ], "address": { "zip_code": "12345-678", "complement": "Rua Santos, Nr 49", "city": "Sorocaba", "state": "São Paulo", "country": "Brasil" } }' -H 'Content-Type: application/json' ```
 
 ```
 [request]
 POST portal/users/5ef9589c2994931e98c15365/orders
 {
-    "products: [
+    "products": [
         {
-            "code": "PRD-9876543",
+            "code": "PRD-0000001",
             "quantity": 10
         },
         {
-            "code": "PRD-654987",
+            "code": "PRD-0000002",
             "quantity": 5
         }
     ],
     "address": {
-       "code": "5GG958bGH994931e98c14253",
-       "zip_code": "654321-987",
+       "zip_code": "12345-678",
        "complement": "Rua Santos, Nr 49",
        "city": "Sorocaba",
        "state": "São Paulo",
@@ -314,9 +313,9 @@ POST portal/users/5ef9589c2994931e98c15365/orders
 201 Created
 {
     "code": "ORD-4569877",
-    "entry_date": "2019-01-29T05:18:56",
+    "entry_time": "2019-01-29T05:18:56",
     "status": "WAITING_FOR_ANSWER",
-    "products: [
+    "products": [
         {
             "code": "PRD-9876543",
             "quantity": 10

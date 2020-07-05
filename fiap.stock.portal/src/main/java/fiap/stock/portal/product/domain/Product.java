@@ -20,6 +20,11 @@ public class Product {
     public Product() {
     }
 
+    public Product(String code, Integer quantity) {
+        this.code = code;
+        this.quantity = quantity;
+    }
+
     public String getId() {
         return id;
     }
