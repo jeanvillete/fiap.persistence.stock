@@ -12,6 +12,25 @@ class AddressServiceImpl implements AddressService {
     private static int MIN_COMPLEMENT_LENGTH = 10;
     private static int MAX_COMPLEMENT_LENGTH = 50;
 
+    private final AddressRepository addressRepository;
+
+    AddressServiceImpl(AddressRepository addressRepository) {
+        this.addressRepository = addressRepository;
+    }
+
+    @Override
+    public void validLoginId(String loginId) throws InvalidSuppliedDataException {
+        if (Objects.isNull(loginId)) {
+            throw new InvalidSuppliedDataException("LoginId is mandatory on path variable.");
+        }
+
+        loginId = loginId.trim();
+
+        if (loginId.isEmpty()) {
+            throw new InvalidSuppliedDataException("LoginId is mandatory on path variable.");
+        }
+    }
+
     @Override
     public void validZipCode(String zipCode) throws InvalidSuppliedDataException {
         if (Objects.isNull(zipCode)) {
@@ -78,6 +97,11 @@ class AddressServiceImpl implements AddressService {
         if (country.isEmpty()) {
             throw new InvalidSuppliedDataException("Nested argument 'country' is mandatory for address.");
         }
+    }
+
+    @Override
+    public void save(Address address) {
+        addressRepository.save(address);
     }
 
 }

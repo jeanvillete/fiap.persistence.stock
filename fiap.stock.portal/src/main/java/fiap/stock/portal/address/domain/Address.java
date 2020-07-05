@@ -9,6 +9,7 @@ public class Address {
     @Id
     private String id;
 
+    private String loginId;
     private String zipCode;
     private String complement;
     private String city;
@@ -26,51 +27,41 @@ public class Address {
         this.country = country;
     }
 
+    public Address(String loginId, String zipCode, String complement, String city, String state, String country) {
+        this.loginId = loginId;
+        this.zipCode = zipCode;
+        this.complement = complement;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+    }
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getLoginId() {
+        return loginId;
     }
 
     public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
     public String getComplement() {
         return complement;
-    }
-
-    public void setComplement(String complement) {
-        this.complement = complement;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getState() {
         return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
 }
