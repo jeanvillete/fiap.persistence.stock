@@ -269,7 +269,7 @@ PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/approve
 
 #
 
-#### 2.6 - [use case: estoquista rejeita um pedido]
+#### 2.6 - [use case: estoquista rejeita um pedido: DONE]
 - O estoquista seleciona um item da lista de pedidos, e **rejeita** a presença deste no estoque, indicando que a compra/pedido deve ser cancelada
     - [validar] o estado (status) do pedido deve estar no valor ***"WAITING_FOR_ANSWER"***, de maneira contrária, devolver mensagem informando do problema com status ***412 Precondition Failed***
 - A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
