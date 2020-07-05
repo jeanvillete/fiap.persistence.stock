@@ -361,7 +361,7 @@ PUT portal/users/5ef9589c2994931e98c15365/orders/ORD-0000001
 
 #
 
-#### 2.9 - [use case: cliente solicita listagem de todos seus pedidos já efetuados]
+#### 2.9 - [use case: cliente solicita listagem de todos seus pedidos já efetuados: DONE]
 - Cliente deve ter a capacidade de listar todos os pedidos efetuados, independentemente de seus status/estados;
     - WAITING_FOR_ANSWER aguardando conferência do estoquista
     - APPROVED aprovado no estoque
