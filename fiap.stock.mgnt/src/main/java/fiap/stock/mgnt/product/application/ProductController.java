@@ -1,4 +1,4 @@
-package fiap.stock.mgnt.product.domain;
+package fiap.stock.mgnt.product.application;
 
 import fiap.stock.mgnt.catalog.domain.exception.CatalogNotFoundException;
 import fiap.stock.mgnt.common.exception.InvalidSuppliedDataException;

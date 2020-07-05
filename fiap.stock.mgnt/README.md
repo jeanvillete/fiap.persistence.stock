@@ -82,7 +82,7 @@ Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenh
 
 Abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
 
-#### 2.1 - [use case: estoquista adiciona um item ao catálogo]
+#### 2.1 - [use case: estoquista adiciona um item ao catálogo: DONE]
 - O catálogo é o que retém a descrição dos produtos, logo tem uma relação **um para muitos (1,N)** com o domínio de produtos
 - A informação básica de um item do catálogo, para fins de mostrar relacionamento porém com simplicidade, é a sua descrição, logo esta informação deverá ser recuperada no corpo do payload
     - ***description*** (campo varchar com no máximo 50 caracteres), campo mandatório
@@ -116,7 +116,7 @@ POST stock/users/5ef958b02994931e98c15366/catalogs
 
 #
 
-#### 2.2 - [use case: estoquista adiciona um produto]
+#### 2.2 - [use case: estoquista adiciona um produto: DONE]
 - Um produto tem um relancionamento **muitos para um (N,1)** com o domínio de catálogo
 - O payload de um produto sendo adicionado deve conter os dados
     - ***price*** (campo com valor real, ou seja com ponto flutuante), campo mandatório
@@ -156,7 +156,7 @@ POST stock/users/5ef958b02994931e98c15366/catalogs/123/products
 
 #
 
-#### 2.3 - [use case: cliente adiciona um pedido]
+#### 2.3 - [use case: cliente adiciona um pedido: DONE]
 - A adição de um pedido vem de uma requisição que chega do módulo ***fiap.stock.portal***
 - O domínio de pedido tem um relacionamento **muitos para muitos (N,N)** com produtos
 - Como a requisição que vem do módulo ***fiap.stock.portal*** tem uma lista dos códigos dos produtos, devemos então buscar pelos produtos correspondentes na base local **MySQL** antes de efetivar a persistência do objeto deserializado
@@ -204,7 +204,7 @@ POST stock/users/5ef9589c2994931e98c15365/orders
 
 #
 
-#### 2.4 - [use case: estoquista lista pedidos]
+#### 2.4 - [use case: estoquista lista pedidos: DONE]
 - Estoquista requisita listagem de pedidos persistidos
 - A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'stock'
@@ -236,7 +236,7 @@ GET stock/users/5ef958b02994931e98c15366/orders
 
 #
 
-#### 2.5 - [use case: estoquista confirma um pedido]
+#### 2.5 - [use case: estoquista confirma um pedido: DONE]
 - O estoquista seleciona um item da lista de pedidos, e **confirma/aprova** a presença deste no estoque, indicando que a compra/pedido deve continuar seu fluxo
     - [validar] o estado (status) do pedido deve estar no valor ***"WAITING_FOR_ANSWER"***, de maneira contrária, devolver mensagem informando do problema com status ***412 Precondition Failed***
     - [validar] os produtos e suas quantidades presentes no pedido devem continuar integros na base de dados local **MySQL**, logo é necessário confirmar que todos os produtos de fato tem tais quantidades disponíveis
@@ -247,11 +247,11 @@ GET stock/users/5ef958b02994931e98c15366/orders
     - é necessário atualizar os dados sumarizados deste pedido na base de dados do módulo ***fiap.stock.portal***, o objeto completo (agora atualizado na base local) através da sua propriedade ***code*** deve ser utilizado para passar para o serviço que sumariza o estado atual deste produto, e com esta informação sumarizada dispara um evento para módulo ***fiap.stock.portal*** atulizar na sua base a sua própria versão do ***domínio Product***
     - é necessário atualizar o ***domínio Order*** no módulo ***fiap.stock.portal***, então devemos obter o objeto resultante, e disparar um evento para módulo ***fiap.stock.portal*** atulizar na sua base a sua própria versão do ***domínio Order***, agora com a informação do **status=APPROVED**
 
-```$ curl stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/aprove -X PUT -H 'Content-Type: application/json' ```
+```$ curl localhost:8282/stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/approve -X PUT -H 'Content-Type: application/json' ```
 
 ```
 [request]
-PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/aprove
+PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/approve
 
 [response]
 200 Ok

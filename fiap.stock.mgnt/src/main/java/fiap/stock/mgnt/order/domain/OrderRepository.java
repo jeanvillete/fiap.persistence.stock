@@ -10,4 +10,6 @@ interface OrderRepository extends JpaRepository<Order, Integer> {
 
     Optional<Integer> countByCode(String code);
 
+    Optional<Order> findByCode(String code);
+
 }

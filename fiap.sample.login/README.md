@@ -39,7 +39,7 @@ Este domínio é persistido permanentemente na base de dados **MongoDB** e manti
 
 Abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
 
-#### 2.1 - [use case: cadastrar usuário/login]
+#### 2.1 - [use case: cadastrar usuário/login: DONE]
 - O caso de uso para cadastrar um usuário recebe como payload as definições básicas do novo usuário, contendo as informações;
     - ***login*** (deve conter 4 caracteres alfabéticos em minúsculo), campo mandatório
     - ***type*** (deve ter um dos dois valores; stock, customer), campo mandatório
@@ -63,7 +63,7 @@ PUT /login
 
 #
 
-#### 2.2 - [use case: fazer login]
+#### 2.2 - [use case: fazer login: DONE]
 - Para fazer login, basta que seja fornecido como path variable os dados type e login
     - ***login*** (deve conter 4 caracteres alfabéticos em minúsculo), campo mandatório
     - ***type*** (deve ter um dos dois valores; stock, customer), campo mandatório

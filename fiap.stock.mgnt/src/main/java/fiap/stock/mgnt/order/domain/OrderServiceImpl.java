@@ -2,6 +2,8 @@ package fiap.stock.mgnt.order.domain;
 
 import fiap.stock.mgnt.common.exception.InvalidSuppliedDataException;
 import fiap.stock.mgnt.order.domain.exception.OrderConflictException;
+import fiap.stock.mgnt.order.domain.exception.OrderIsNotWaitingForResponseException;
+import fiap.stock.mgnt.order.domain.exception.OrderNotFoundException;
 import fiap.stock.mgnt.product.domain.Product;
 import org.springframework.stereotype.Service;
 
@@ -69,8 +71,26 @@ class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order findByCode(String code) throws OrderNotFoundException {
+        return orderRepository.findByCode(code)
+                .orElseThrow(() -> new OrderNotFoundException("No order with code [" + code + "] could be found."));
+    }
+
+    @Override
     public List<Order> findAllOrders() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public void checkOrderIsWaitingForApproval(String orderCode) throws OrderIsNotWaitingForResponseException, OrderNotFoundException {
+        Order order = findByCode(orderCode);
+
+        if (order.getStatus() != OrderStatus.WAITING_FOR_ANSWER) {
+            throw new OrderIsNotWaitingForResponseException(
+                    "Order with code [" + orderCode + "] should have the status" +
+                            " [" + OrderStatus.WAITING_FOR_ANSWER + "] but it is [" + order.getStatus() + "]"
+            );
+        }
     }
 
 }
