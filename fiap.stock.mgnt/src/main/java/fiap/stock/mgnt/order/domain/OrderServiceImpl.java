@@ -5,6 +5,7 @@ import fiap.stock.mgnt.order.domain.exception.OrderConflictException;
 import fiap.stock.mgnt.product.domain.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -65,6 +66,11 @@ class OrderServiceImpl implements OrderService {
     @Override
     public void save(Order order) {
         orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> findAllOrders() {
+        return orderRepository.findAll();
     }
 
 }

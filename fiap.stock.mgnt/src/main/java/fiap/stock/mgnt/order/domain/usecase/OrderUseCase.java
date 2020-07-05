@@ -127,6 +127,20 @@ public class OrderUseCase {
         order.setProducts(mappedOrdersAndProducts);
         orderService.save(order);
 
+        return getOrderPayload(order);
+    }
+
+    public List<OrderPayload> findAllOrders(String loginId) throws InvalidSuppliedDataException {
+        orderService.validLoginId(loginId);
+
+        List<Order> allOrderList = orderService.findAllOrders();
+
+        return allOrderList.stream()
+                .map(this::getOrderPayload)
+                .collect(Collectors.toList());
+    }
+
+    private OrderPayload getOrderPayload(Order order) {
         List<ProductPayload> productsPayload = order.getProducts()
                 .stream()
                 .map(orderProduct -> new ProductPayload(

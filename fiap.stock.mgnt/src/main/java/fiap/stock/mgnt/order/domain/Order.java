@@ -23,6 +23,9 @@ public class Order {
     @Column(nullable = false, length = 20, name = "order_status")
     private OrderStatus status;
 
+    public Order() {
+    }
+
     public Order(String loginId, String code, OrderStatus status) {
         this.loginId = loginId;
         this.code = code;
