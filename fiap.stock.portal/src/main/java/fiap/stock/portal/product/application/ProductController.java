@@ -5,6 +5,8 @@ import fiap.stock.portal.product.domain.usecase.ProductUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("portal/users/{loginId}/products")
 public class ProductController {
@@ -19,6 +21,11 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public String insertNewProduct(@PathVariable("loginId") String loginId, @RequestBody ProductUseCase.ProductPayload productPayload) throws InvalidSuppliedDataException {
         return productUseCase.insertNewProduct(loginId, productPayload);
+    }
+
+    @GetMapping
+    public List<ProductUseCase.ProductPayload> findAllProducts(@PathVariable("loginId") String loginId) {
+        return productUseCase.findAllProducts(loginId);
     }
 
 }

@@ -4,6 +4,7 @@ import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -74,6 +75,11 @@ class ProductServiceImpl implements ProductService {
     @Override
     public void save(Product product) {
         productRepository.save(product);
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 
 }

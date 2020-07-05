@@ -102,7 +102,7 @@ POST portal/users/5ef958b02994931e98c15366/products
 
 #
 
-#### 2.2 - [use case: lista produtos no portal, acessível a estoquista ou cliente]
+#### 2.2 - [use case: lista produtos no portal, acessível a estoquista ou cliente: DONE]
 - Carregar toda a lista de produtos registrada no **fiap.stock.portal**
 - Os dados carregados no payload para o domínio Produto devem ser;
     - ***code***

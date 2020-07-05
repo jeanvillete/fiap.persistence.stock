@@ -3,6 +3,7 @@ package fiap.stock.portal.product.domain;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface ProductService {
 
@@ -19,5 +20,7 @@ public interface ProductService {
     Product findByCode(String code);
 
     void save(Product product);
+
+    List<Product> findAll();
 
 }
