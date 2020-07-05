@@ -11,21 +11,12 @@ import java.math.BigDecimal;
 public class ProductUseCase {
 
     public static class ProductPayload {
-        String loginId;
         String code;
         String description;
         BigDecimal price;
         Integer quantity;
 
         public ProductPayload() {
-        }
-
-        public String getLoginId() {
-            return loginId;
-        }
-
-        public void setLoginId(String loginId) {
-            this.loginId = loginId;
         }
 
         public String getCode() {
@@ -67,8 +58,8 @@ public class ProductUseCase {
         this.productService = productService;
     }
 
-    public String insertNewProduct(ProductPayload productPayload) throws InvalidSuppliedDataException {
-        productService.validLoginId(productPayload.loginId);
+    public String insertNewProduct(String loginId, ProductPayload productPayload) throws InvalidSuppliedDataException {
+        productService.validLoginId(loginId);
 
         productService.validCode(productPayload.code);
         productService.validDescription(productPayload.description);
@@ -77,7 +68,7 @@ public class ProductUseCase {
 
         Product product = productService.findByCode(productPayload.code);
 
-        product.setLoginId(productPayload.loginId);
+        product.setLoginId(loginId);
         product.setCode(productPayload.code);
         product.setDescription(productPayload.description);
         product.setPrice(productPayload.price);

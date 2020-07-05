@@ -18,9 +18,7 @@ public class ProductController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String insertNewProduct(@PathVariable("loginId") String loginId, @RequestBody ProductUseCase.ProductPayload productPayload) throws InvalidSuppliedDataException {
-        productPayload.setLoginId(loginId);
-
-        return productUseCase.insertNewProduct(productPayload);
+        return productUseCase.insertNewProduct(loginId, productPayload);
     }
 
 }
