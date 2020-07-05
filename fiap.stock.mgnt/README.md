@@ -119,9 +119,11 @@ PUT stock/users/5ef958b02994931e98c15366/catalogs
 #### 2.2 - [use case: estoquista adiciona um produto]
 - Um produto tem um relancionamento **muitos para um (N,1)** com o domínio de catálogo
 - O payload de um produto sendo adicionado deve conter os dados
-    - ***catalog*** (campo inteiro, identificador do domínio de catálogo, logo deve ter sido obtido antes), campo mandatório
     - ***price*** (campo com valor real, ou seja com ponto flutuante), campo mandatório
     - ***quantity*** (campo inteiro) campo mandatório
+- A informação ***catalogId*** será fornecida via path variable
+    - campo inteiro, identificador do domínio de catálogo, logo deve ter sido obtido antes
+    - campo mandatório
 - A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - ***loginId*** (deve conter no máximo 25 caracteres, necessário para o tamaho de um _id do MongoDB, que é de onde vem esta informação), campo mandatório
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'stock'
@@ -130,13 +132,12 @@ PUT stock/users/5ef958b02994931e98c15366/catalogs
     - ***entry_date*** campo que afirma a hora de registro do item
 - [IMPORTANTE] assim que for adicionado um produto na base local **MySQL**, o objeto completo retornado através da sua propriedade ***code*** deve ser utilizado para passar para o serviço que sumariza o estado atual deste produto, e com esta informação sumarizada dispara um evento para módulo ***fiap.stock.portal*** atulizar na sua base a sua própria versão do ***domínio Product***
 
-```$ curl localhost:8282/stock/users/5ef958b02994931e98c15366/products -d '{"catalog": 123, "price": 253.63, "quantity": 24}' -H 'Content-Type: application/json' ```
+```$ curl localhost:8282/stock/users/5ef958b02994931e98c15366/catalogs/123/products -d '{"price": 253.63, "quantity": 24}' -H 'Content-Type: application/json' ```
 
 ```
 [request]
-PUT stock/users/5ef958b02994931e98c15366/products
+POST stock/users/5ef958b02994931e98c15366/catalogs/123/products
 {
-    "catalog": 123,
     "price": 253.63,
     "quantity": 24
 }
@@ -145,10 +146,11 @@ PUT stock/users/5ef958b02994931e98c15366/products
 201 Created
 {
     "code": "PRD-9876543",
-    "catalog": 123,
+    "catalog_id": 123,
     "price": 253.63,
     "quantity": 24,
-    "entry_date": "2019-01-29T05:18:56"
+    "entry_date": "2019-01-29T05:18:56",
+    "login_id": "5ef958b02994931e98c15366"
 }
 ```
 

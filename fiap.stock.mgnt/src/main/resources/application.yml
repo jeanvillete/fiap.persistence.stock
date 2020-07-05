@@ -16,3 +16,7 @@ spring:
 
 logging:
   config: classpath:logback.xml
+
+stock:
+  portal:
+    host: http://localhost:8383/

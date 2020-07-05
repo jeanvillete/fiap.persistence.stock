@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class CatalogUseCase {
 
     public static class CatalogPayload {
-        Integer id;
 
         @JsonProperty("login_id")
         String loginId;
 
+        Integer id;
         String description;
 
         public CatalogPayload() {
