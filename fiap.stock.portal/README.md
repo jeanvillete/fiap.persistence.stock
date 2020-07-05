@@ -161,7 +161,7 @@ GET portal/users/5ef958b02994931e98c15366/products/PRD-9876543
 
 #
 
-#### 2.4 - [use case: adiciona um registro de endereço para o cliente]
+#### 2.4 - [use case: adiciona um registro de endereço para o cliente: DONE]
 - Adiciona um registro de endereço para um cliente
 - Payload com os dados;
     - ***zipCode***
