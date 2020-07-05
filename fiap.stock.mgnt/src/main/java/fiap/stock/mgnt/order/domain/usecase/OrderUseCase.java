@@ -1,5 +1,6 @@
 package fiap.stock.mgnt.order.domain.usecase;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fiap.stock.mgnt.common.exception.InvalidSuppliedDataException;
 import fiap.stock.mgnt.order.domain.Order;
 import fiap.stock.mgnt.order.domain.OrderProduct;
@@ -26,69 +27,31 @@ import java.util.stream.Stream;
 public class OrderUseCase {
 
     public static class ProductPayload {
+        @JsonProperty
         String code;
-        Integer quantity;
 
-        public ProductPayload() {
-        }
+        @JsonProperty
+        Integer quantity;
 
         public ProductPayload(String code, Integer quantity) {
             this.code = code;
             this.quantity = quantity;
         }
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public Integer getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(Integer quantity) {
-            this.quantity = quantity;
-        }
     }
 
     public static class OrderPayload {
+        @JsonProperty
         String code;
-        List<ProductPayload> products;
-        OrderStatus orderStatus;
 
-        public OrderPayload() {
-        }
+        @JsonProperty
+        List<ProductPayload> products;
+
+        @JsonProperty
+        OrderStatus orderStatus;
 
         public OrderPayload(String code, List<ProductPayload> products, OrderStatus orderStatus) {
             this.code = code;
             this.products = products;
-            this.orderStatus = orderStatus;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public List<ProductPayload> getProducts() {
-            return products;
-        }
-
-        public void setProducts(List<ProductPayload> products) {
-            this.products = products;
-        }
-
-        public OrderStatus getOrderStatus() {
-            return orderStatus;
-        }
-
-        public void setOrderStatus(OrderStatus orderStatus) {
             this.orderStatus = orderStatus;
         }
     }
@@ -149,7 +112,7 @@ public class OrderUseCase {
                 .collect(Collectors.toList());
     }
 
-    public OrderPayload approveOrder(String loginId, String orderCode) throws InvalidSuppliedDataException, OrderNotFoundException, OrderIsNotWaitingForResponseException {
+    public OrderPayload approveClientOrder(String loginId, String orderCode) throws InvalidSuppliedDataException, OrderNotFoundException, OrderIsNotWaitingForResponseException {
         orderService.validLoginId(loginId);
 
         orderService.checkOrderIsWaitingForApproval(orderCode);
@@ -173,6 +136,20 @@ public class OrderUseCase {
                 throw new RuntimeException(exception);
             }
         });
+
+        portalOrderService.postUpdatedOrderStatus(loginId, order);
+
+        return getOrderPayload(order);
+    }
+
+    public OrderPayload rejectClientOrder(String loginId, String orderCode) throws InvalidSuppliedDataException, OrderNotFoundException, OrderIsNotWaitingForResponseException {
+        orderService.validLoginId(loginId);
+
+        orderService.checkOrderIsWaitingForApproval(orderCode);
+
+        Order order = orderService.findByCode(orderCode);
+        order.setStatus(OrderStatus.REJECTED);
+        orderService.save(order);
 
         portalOrderService.postUpdatedOrderStatus(loginId, order);
 

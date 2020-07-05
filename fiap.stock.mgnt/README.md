@@ -275,18 +275,18 @@ PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/approve
 - A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'stock'
 - O resultado deve ter o payload com os dados adicionais, e devolvido com status ***200 Ok***
-- [IMPORTANTE] uma vez rejeitado o pedido na base local **MySQL**, é necessário atualizar o ***domínio Order*** no módulo ***fiap.stock.portal***, então devemos obter o objeto resultante, e disparar um evento para módulo ***fiap.stock.portal*** atulizar na sua base a sua própria versão do ***domínio Order***, agora com a informação do **status=REJECTED**
+- [IMPORTANTE] uma vez rejeitado o pedido na base local **MySQL**, é necessário atualizar o ***domínio Order*** no módulo ***fiap.stock.portal***, então devemos obter o objeto resultante, e disparar um evento para módulo ***fiap.stock.portal*** atualizar na sua base a sua própria versão do ***domínio Order***, agora com a informação do **status=REJECTED**
 
-```$ curl stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/reject -X PUT -H 'Content-Type: application/json' ```
+```$ curl stock/users/5ef958b02994931e98c15366/orders/ORD-0000001/reject -X PUT -H 'Content-Type: application/json' ```
 
 ```
 [request]
-PUT stock/users/5ef958b02994931e98c15366/orders/ORD-4569877/reject
+PUT stock/users/5ef958b02994931e98c15366/orders/ORD-0000001/reject
 
 [response]
 200 Ok
 {
-    "code": "ORD-4569877",
+    "code": "ORD-0000001",
     "products: [
         {
             "code": "PRD-9876543",

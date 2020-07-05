@@ -31,13 +31,29 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<OrderUseCase.OrderPayload> findAllOrders(@PathVariable("loginId") String loginId) throws InvalidSuppliedDataException {
+    public List<OrderUseCase.OrderPayload> findAllOrders(
+            @PathVariable("loginId") String loginId)
+            throws InvalidSuppliedDataException {
+
         return orderUseCase.findAllOrders(loginId);
     }
 
     @PutMapping("{orderCode}/approve")
-    public OrderUseCase.OrderPayload approveOrder(@PathVariable("loginId") String loginId, @PathVariable("orderCode") String orderCode) throws InvalidSuppliedDataException, OrderNotFoundException, OrderIsNotWaitingForResponseException {
-        return orderUseCase.approveOrder(loginId, orderCode);
+    public OrderUseCase.OrderPayload approveClientOrder(
+            @PathVariable("loginId") String loginId,
+            @PathVariable("orderCode") String orderCode)
+            throws InvalidSuppliedDataException, OrderNotFoundException, OrderIsNotWaitingForResponseException {
+
+        return orderUseCase.approveClientOrder(loginId, orderCode);
+    }
+
+    @PutMapping("{orderCode}/reject")
+    public OrderUseCase.OrderPayload rejectClientOrder(
+            @PathVariable("loginId") String loginId,
+            @PathVariable("orderCode") String orderCode)
+            throws InvalidSuppliedDataException, OrderNotFoundException, OrderIsNotWaitingForResponseException {
+
+        return orderUseCase.rejectClientOrder(loginId, orderCode);
     }
 
 }
