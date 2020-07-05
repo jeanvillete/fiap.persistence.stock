@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import fiap.stock.portal.product.domain.Product;
 import fiap.stock.portal.product.domain.ProductService;
+import fiap.stock.portal.product.domain.exception.ProductNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -31,6 +32,13 @@ public class ProductUseCase {
             this.description = description;
             this.price = price;
         }
+
+        public ProductPayload(String code, String description, BigDecimal price, Integer quantity) {
+            this.code = code;
+            this.description = description;
+            this.price = price;
+            this.quantity = quantity;
+        }
     }
 
     private final ProductService productService;
@@ -47,7 +55,12 @@ public class ProductUseCase {
         productService.validPrice(productPayload.price);
         productService.validQuantity(productPayload.quantity);
 
-        Product product = productService.findByCode(productPayload.code);
+        Product product = null;
+        try {
+            product = productService.findByCode(productPayload.code);
+        } catch (ProductNotFoundException e) {
+            product = new Product();
+        }
 
         product.setLoginId(loginId);
         product.setCode(productPayload.code);
@@ -70,6 +83,17 @@ public class ProductUseCase {
                         product.getPrice()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public ProductPayload findProductByCode(String loginId, String productCode) throws ProductNotFoundException {
+        Product product = productService.findByCode(productCode);
+
+        return new ProductPayload(
+                product.getCode(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getQuantity()
+        );
     }
 
 }

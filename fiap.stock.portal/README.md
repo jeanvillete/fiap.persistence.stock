@@ -135,7 +135,7 @@ GET portal/users/5ef958b02994931e98c15366/products
 
 #
 
-#### 2.3 - [use case: carrega determinado produto baseado no seu code, acessível a estoquista ou cliente]
+#### 2.3 - [use case: carrega determinado produto baseado no seu code, acessível a estoquista ou cliente: DONE]
 - Carregar todos os dados de um domínio Produto, baseado no seu code
 - Dados do produto;
     - ***code***

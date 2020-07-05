@@ -1,6 +1,7 @@
 package fiap.stock.portal.product.application;
 
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
+import fiap.stock.portal.product.domain.exception.ProductNotFoundException;
 import fiap.stock.portal.product.domain.usecase.ProductUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,14 @@ public class ProductController {
     @GetMapping
     public List<ProductUseCase.ProductPayload> findAllProducts(@PathVariable("loginId") String loginId) {
         return productUseCase.findAllProducts(loginId);
+    }
+
+    @GetMapping("{productCode}")
+    public ProductUseCase.ProductPayload findProductByCode(
+            @PathVariable("loginId") String loginId,
+            @PathVariable("productCode") String productCode) throws ProductNotFoundException {
+
+        return productUseCase.findProductByCode(loginId, productCode);
     }
 
 }

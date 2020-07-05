@@ -1,6 +1,7 @@
 package fiap.stock.portal.product.domain;
 
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
+import fiap.stock.portal.product.domain.exception.ProductNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,7 +18,7 @@ public interface ProductService {
 
     void validQuantity(Integer quantity) throws InvalidSuppliedDataException;
 
-    Product findByCode(String code);
+    Product findByCode(String code) throws ProductNotFoundException;
 
     void save(Product product);
 

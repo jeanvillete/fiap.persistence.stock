@@ -1,6 +1,7 @@
 package fiap.stock.portal.product.domain;
 
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
+import fiap.stock.portal.product.domain.exception.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -67,9 +68,9 @@ class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findByCode(String code) {
+    public Product findByCode(String code) throws ProductNotFoundException {
         return productRepository.findByCode(code)
-            .orElse(new Product());
+            .orElseThrow(() -> new ProductNotFoundException("No product could be found for the code [" + code + "]"));
     }
 
     @Override
