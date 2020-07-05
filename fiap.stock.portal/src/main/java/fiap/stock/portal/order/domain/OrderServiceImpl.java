@@ -3,12 +3,14 @@ package fiap.stock.portal.order.domain;
 import fiap.stock.portal.address.domain.Address;
 import fiap.stock.portal.address.domain.AddressService;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
+import fiap.stock.portal.order.domain.exception.OrderNotFoundException;
 import fiap.stock.portal.product.domain.Product;
 import fiap.stock.portal.product.domain.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 @Service
 class OrderServiceImpl implements OrderService {
@@ -35,6 +37,19 @@ class OrderServiceImpl implements OrderService {
 
         if (loginId.isEmpty()) {
             throw new InvalidSuppliedDataException("LoginId is mandatory on path variable.");
+        }
+    }
+
+    @Override
+    public void validCode(String code) throws InvalidSuppliedDataException {
+        if (Objects.isNull(code)) {
+            throw new InvalidSuppliedDataException("Argument 'code' is mandatory.");
+        }
+
+        code = code.trim();
+
+        if (!Pattern.compile("^" + ORD_PREFIX + "[\\d]{7}$").matcher(code).matches()) {
+            throw new InvalidSuppliedDataException("Argument 'code' must follow the pattern; " + ORD_PREFIX + "0000000");
         }
     }
 
@@ -76,6 +91,29 @@ class OrderServiceImpl implements OrderService {
     @Override
     public void save(Order order) {
         orderRepository.save(order);
+    }
+
+    @Override
+    public void validOrderStatus(OrderStatus status) throws InvalidSuppliedDataException {
+        if (Objects.isNull(status)) {
+            throw new InvalidSuppliedDataException("Argument 'status' is mandatory.");
+        }
+    }
+
+    @Override
+    public Order findByCode(String code) throws OrderNotFoundException {
+        return orderRepository.findByCode(code)
+                .orElseThrow(() ->
+                        new OrderNotFoundException("No order could be found for the provided order code [" + code + "]")
+                );
+    }
+
+    @Override
+    public void updateOrderStatus(String orderCode, OrderStatus status) throws OrderNotFoundException {
+        Order order = findByCode(orderCode);
+
+        order.setOrderStatus(status);
+        save(order);
     }
 
 }

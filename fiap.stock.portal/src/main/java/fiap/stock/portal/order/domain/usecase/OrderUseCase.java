@@ -6,6 +6,7 @@ import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import fiap.stock.portal.order.domain.Order;
 import fiap.stock.portal.order.domain.OrderService;
 import fiap.stock.portal.order.domain.OrderStatus;
+import fiap.stock.portal.order.domain.exception.OrderNotFoundException;
 import fiap.stock.portal.product.domain.Product;
 import fiap.stock.portal.stockorder.domain.StockOrderService;
 import org.springframework.stereotype.Component;
@@ -65,7 +66,7 @@ public class OrderUseCase {
         String code;
 
         @JsonProperty
-        OrderStatus orderStatus;
+        OrderStatus status;
 
         @JsonProperty
         List<ProductPayload> products;
@@ -73,9 +74,9 @@ public class OrderUseCase {
         @JsonProperty
         AddressPayload address;
 
-        OrderPayload(String code, LocalDateTime entryTime, OrderStatus orderStatus, List<ProductPayload> products, AddressPayload address) {
+        OrderPayload(String code, LocalDateTime entryTime, OrderStatus status, List<ProductPayload> products, AddressPayload address) {
             this.entryTime = entryTime;
-            this.orderStatus = orderStatus;
+            this.status = status;
             this.code = code;
             this.products = products;
             this.address = address;
@@ -130,6 +131,16 @@ public class OrderUseCase {
         stockOrderService.postOrderToStock(loginId, order);
 
         return getOrderPayload(order);
+    }
+
+    public void updateClientOrderStatus(String loginId, String orderCode, OrderPayload orderPayload) throws InvalidSuppliedDataException, OrderNotFoundException {
+        orderService.validLoginId(loginId);
+
+        orderService.validCode(orderCode);
+
+        orderService.validOrderStatus(orderPayload.status);
+
+        orderService.updateOrderStatus(orderCode, orderPayload.status);
     }
 
     private OrderPayload getOrderPayload(Order order) {

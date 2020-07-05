@@ -1,6 +1,7 @@
 package fiap.stock.portal.common.application;
 
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
+import fiap.stock.portal.order.domain.exception.OrderNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(value = {InvalidSuppliedDataException.class})
     protected ResponseEntity<Object> handleBadRequest(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {OrderNotFoundException.class})
+    protected ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request) {
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
 }

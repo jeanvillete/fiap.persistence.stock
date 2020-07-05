@@ -338,7 +338,30 @@ POST portal/users/5ef9589c2994931e98c15365/orders
 
 #
 
-#### 2.8 - [use case: cliente solicita listagem de todos seus pedidos já efetuados]
+#### 2.8 - [use case: estoquista atualiza status do pedido do cliente no portal: DONE]
+- O payload na requisição é composto dos campos
+    - ***status*** (campo mandatório) o estado desta ordem perante o módulo **fiap.stock.mgnt**
+- A informação ***code*** deverá ser recebida via path variable, e identifica a qual pedido o estoquista está alterando
+- A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock)
+    - ***loginId***
+        - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'stock'
+
+```$ curl -X PUT localhost:8383/portal/users/5ef9589c2994931e98c15365/orders/ORD-0000001 -d '{ "status": "APPROVED" }' -H 'Content-Type: application/json' ```
+
+```
+[request]
+PUT portal/users/5ef9589c2994931e98c15365/orders/ORD-0000001
+{
+    "status": "APPROVED"
+}
+
+[response]
+200 Ok
+```
+
+#
+
+#### 2.9 - [use case: cliente solicita listagem de todos seus pedidos já efetuados]
 - Cliente deve ter a capacidade de listar todos os pedidos efetuados, independentemente de seus status/estados;
     - WAITING_FOR_ANSWER aguardando conferência do estoquista
     - APPROVED aprovado no estoque
