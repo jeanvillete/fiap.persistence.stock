@@ -2,6 +2,8 @@ package fiap.stock.portal.address.domain;
 
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 
+import java.util.List;
+
 public interface AddressService {
 
     void validLoginId(String loginId) throws InvalidSuppliedDataException;
@@ -17,5 +19,7 @@ public interface AddressService {
     void validCountry(String country) throws InvalidSuppliedDataException;
 
     void save(Address address);
+
+    List<Address> findAllByLoginId(String loginId);
 
 }

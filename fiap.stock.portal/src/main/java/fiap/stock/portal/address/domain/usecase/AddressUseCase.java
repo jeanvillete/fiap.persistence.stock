@@ -6,6 +6,9 @@ import fiap.stock.portal.address.domain.AddressService;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class AddressUseCase {
 
@@ -28,13 +31,13 @@ public class AddressUseCase {
         @JsonProperty
         String country;
 
-        public AddressPayload(String code, String zipCode, String complement, String city, String state, String country) {
-            this.code = code;
-            this.zipCode = zipCode;
-            this.complement = complement;
-            this.city = city;
-            this.state = state;
-            this.country = country;
+        public AddressPayload(Address address) {
+            this.code = address.getId();
+            this.zipCode = address.getZipCode();
+            this.complement = address.getComplement();
+            this.city = address.getCity();
+            this.state = address.getState();
+            this.country = address.getCountry();
         }
     }
 
@@ -64,14 +67,17 @@ public class AddressUseCase {
 
         addressService.save(address);
 
-        return new AddressPayload(
-                address.getId(),
-                address.getZipCode(),
-                address.getComplement(),
-                address.getCity(),
-                address.getState(),
-                address.getCountry()
-        );
+        return new AddressPayload(address);
+    }
+
+    public List<AddressPayload> findAllAddresses(String loginId) throws InvalidSuppliedDataException {
+        addressService.validLoginId(loginId);
+
+        List<Address> addressList = addressService.findAllByLoginId(loginId);
+
+        return addressList.stream()
+                .map(AddressPayload::new)
+                .collect(Collectors.toList());
     }
 
 }

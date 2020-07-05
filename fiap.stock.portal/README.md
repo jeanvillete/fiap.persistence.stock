@@ -202,7 +202,7 @@ POST portal/users/5ef9589c2994931e98c15365/addresses
 
 #
 
-#### 2.5 - [use case: lista todos os registros de endereço para o cliente]
+#### 2.5 - [use case: lista todos os registros de endereço para o cliente: DONE]
 - Lista todos os registros de endereço para o cliente
 - Payload com os dados;
     - ***code*** (código gerido internamente)
@@ -216,11 +216,11 @@ POST portal/users/5ef9589c2994931e98c15365/addresses
         - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'customer'
         - [validar] a listagem só pode trazer registros de endereços específicos do usuário corrente, logo deve estar na clausula de acesso ao registro persistido
         
-```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364 -H 'Content-Type: application/json' ```
+```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses ```
 
 ```
 [request]
-GET portal/users/5ef9589c2994931e98c15365/addresses/5ff958bGH994931e98c15364
+GET portal/users/5ef9589c2994931e98c15365/addresses
 
 [response]
 200 Ok

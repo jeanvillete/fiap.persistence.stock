@@ -5,6 +5,8 @@ import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("portal/users/{loginId}/addresses")
 public class AddressController {
@@ -23,6 +25,14 @@ public class AddressController {
             throws InvalidSuppliedDataException {
 
         return addressUseCase.insertNewClientAddress(loginId, addressPayload);
+    }
+
+    @GetMapping
+    public List<AddressUseCase.AddressPayload> findAllAddresses(
+            @PathVariable("loginId") String loginId)
+            throws InvalidSuppliedDataException {
+
+        return addressUseCase.findAllAddresses(loginId);
     }
 
 }

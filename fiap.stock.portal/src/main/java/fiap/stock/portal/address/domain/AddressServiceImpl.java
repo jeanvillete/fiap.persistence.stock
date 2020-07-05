@@ -3,6 +3,8 @@ package fiap.stock.portal.address.domain;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -102,6 +104,12 @@ class AddressServiceImpl implements AddressService {
     @Override
     public void save(Address address) {
         addressRepository.save(address);
+    }
+
+    @Override
+    public List<Address> findAllByLoginId(String loginId) {
+        return addressRepository.findAllByLoginId(loginId)
+            .orElse(Collections.emptyList());
     }
 
 }
