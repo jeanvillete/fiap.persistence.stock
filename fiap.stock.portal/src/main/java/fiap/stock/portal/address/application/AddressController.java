@@ -1,5 +1,6 @@
 package fiap.stock.portal.address.application;
 
+import fiap.stock.portal.address.domain.exception.AddressNotFoundException;
 import fiap.stock.portal.address.domain.usecase.AddressUseCase;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,14 @@ public class AddressController {
             throws InvalidSuppliedDataException {
 
         return addressUseCase.findAllAddresses(loginId);
+    }
+
+    @DeleteMapping("{addressCode}")
+    public void removeClientAddressRecord(
+            @PathVariable("loginId") String loginId,
+            @PathVariable("addressCode") String addressCode) throws AddressNotFoundException, InvalidSuppliedDataException {
+
+        addressUseCase.removeClientAddressRecord(loginId, addressCode);
     }
 
 }

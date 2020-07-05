@@ -1,5 +1,6 @@
 package fiap.stock.portal.address.domain;
 
+import fiap.stock.portal.address.domain.exception.AddressNotFoundException;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 
 import java.util.List;
@@ -21,5 +22,9 @@ public interface AddressService {
     void save(Address address);
 
     List<Address> findAllByLoginId(String loginId);
+
+    void ensureAddressRecordExist(String loginId, String addressCode) throws AddressNotFoundException;
+
+    void removeById(String addressCode);
 
 }

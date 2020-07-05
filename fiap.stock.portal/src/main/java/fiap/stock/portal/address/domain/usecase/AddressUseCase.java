@@ -3,6 +3,7 @@ package fiap.stock.portal.address.domain.usecase;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fiap.stock.portal.address.domain.Address;
 import fiap.stock.portal.address.domain.AddressService;
+import fiap.stock.portal.address.domain.exception.AddressNotFoundException;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import org.springframework.stereotype.Component;
 
@@ -78,6 +79,14 @@ public class AddressUseCase {
         return addressList.stream()
                 .map(AddressPayload::new)
                 .collect(Collectors.toList());
+    }
+
+    public void removeClientAddressRecord(String loginId, String addressCode) throws InvalidSuppliedDataException, AddressNotFoundException {
+        addressService.validLoginId(loginId);
+
+        addressService.ensureAddressRecordExist(loginId, addressCode);
+
+        addressService.removeById(addressCode);
     }
 
 }

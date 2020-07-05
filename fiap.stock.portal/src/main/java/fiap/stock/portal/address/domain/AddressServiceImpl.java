@@ -1,5 +1,6 @@
 package fiap.stock.portal.address.domain;
 
+import fiap.stock.portal.address.domain.exception.AddressNotFoundException;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import org.springframework.stereotype.Service;
 
@@ -110,6 +111,21 @@ class AddressServiceImpl implements AddressService {
     public List<Address> findAllByLoginId(String loginId) {
         return addressRepository.findAllByLoginId(loginId)
             .orElse(Collections.emptyList());
+    }
+
+    @Override
+    public void ensureAddressRecordExist(String loginId, String id) throws AddressNotFoundException {
+        Integer countClientAddress = addressRepository.countByLoginIdAndId(loginId, id)
+                .orElse(0);
+
+        if (countClientAddress == 0) {
+            throw new AddressNotFoundException("No address could be found for the address code [" + id + "]");
+        }
+    }
+
+    @Override
+    public void removeById(String addressCode) {
+        addressRepository.deleteById(addressCode);
     }
 
 }

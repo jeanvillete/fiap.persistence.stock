@@ -11,4 +11,6 @@ interface AddressRepository extends MongoRepository<Address, String> {
 
     Optional<List<Address>> findAllByLoginId(String loginId);
 
+    Optional<Integer> countByLoginIdAndId(String loginId, String id);
+
 }

@@ -1,5 +1,6 @@
 package fiap.stock.portal.common.application;
 
+import fiap.stock.portal.address.domain.exception.AddressNotFoundException;
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import fiap.stock.portal.order.domain.exception.OrderNotFoundException;
 import fiap.stock.portal.product.domain.exception.ProductNotFoundException;
@@ -19,7 +20,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(value = {OrderNotFoundException.class, ProductNotFoundException.class})
+    @ExceptionHandler(value = {OrderNotFoundException.class, ProductNotFoundException.class, AddressNotFoundException.class})
     protected ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
