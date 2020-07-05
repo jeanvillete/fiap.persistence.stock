@@ -248,7 +248,7 @@ GET portal/users/5ef9589c2994931e98c15365/addresses
 
 #
 
-#### 2.6 - [use case: remoção de um registro de endereço para o cliente]
+#### 2.6 - [use case: remoção de um registro de endereço para o cliente: DONE]
 - Remoção de um registro de endereço para o cliente
 - A identificação do registro de endereço a ser removido deve ser fornecido via path variable
 - Payload com os dados;
