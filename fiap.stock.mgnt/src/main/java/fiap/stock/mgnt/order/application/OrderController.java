@@ -23,8 +23,6 @@ public class OrderController {
             @RequestBody OrderUseCase.OrderPayload orderPayload)
             throws OrderConflictException, InvalidSuppliedDataException {
 
-        orderPayload.setLoginId(loginId);
-
-        return orderUseCase.insertNewOrder(orderPayload);
+        return orderUseCase.insertNewOrder(loginId, orderPayload);
     }
 }

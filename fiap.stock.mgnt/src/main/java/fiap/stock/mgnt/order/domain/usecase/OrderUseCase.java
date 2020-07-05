@@ -1,6 +1,5 @@
 package fiap.stock.mgnt.order.domain.usecase;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import fiap.stock.mgnt.common.exception.InvalidSuppliedDataException;
 import fiap.stock.mgnt.order.domain.Order;
 import fiap.stock.mgnt.order.domain.OrderProduct;
@@ -51,9 +50,6 @@ public class OrderUseCase {
     }
 
     public static class OrderPayload {
-        @JsonProperty("login_id")
-        String loginId;
-
         String code;
         List<ProductPayload> products;
         OrderStatus orderStatus;
@@ -61,19 +57,10 @@ public class OrderUseCase {
         public OrderPayload() {
         }
 
-        public OrderPayload(String loginId, String code, List<ProductPayload> products, OrderStatus orderStatus) {
-            this.loginId = loginId;
+        public OrderPayload(String code, List<ProductPayload> products, OrderStatus orderStatus) {
             this.code = code;
             this.products = products;
             this.orderStatus = orderStatus;
-        }
-
-        public String getLoginId() {
-            return loginId;
-        }
-
-        public void setLoginId(String loginId) {
-            this.loginId = loginId;
         }
 
         public String getCode() {
@@ -109,8 +96,8 @@ public class OrderUseCase {
         this.productService = productService;
     }
 
-    public OrderPayload insertNewOrder(OrderPayload orderPayload) throws InvalidSuppliedDataException, OrderConflictException {
-        orderService.validLoginId(orderPayload.loginId);
+    public OrderPayload insertNewOrder(String loginId, OrderPayload orderPayload) throws InvalidSuppliedDataException, OrderConflictException {
+        orderService.validLoginId(loginId);
 
         orderService.validCode(orderPayload.code);
         orderService.checkForConflictOnInsert(orderPayload.code);
@@ -123,7 +110,7 @@ public class OrderUseCase {
         productService.validProductList(detachedProductList);
 
         Order order = new Order(
-                orderPayload.loginId,
+                loginId,
                 orderPayload.code,
                 OrderStatus.WAITING_FOR_ANSWER
         );
@@ -148,7 +135,6 @@ public class OrderUseCase {
                 ))
                 .collect(Collectors.toList());
         return new OrderPayload(
-                order.getLoginId(),
                 order.getCode(),
                 productsPayload,
                 order.getStatus()
