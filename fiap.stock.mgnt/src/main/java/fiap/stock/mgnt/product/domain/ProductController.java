@@ -24,10 +24,9 @@ public class ProductController {
             @RequestBody ProductUseCase.ProductPayload productPayload)
             throws CatalogNotFoundException, InvalidSuppliedDataException {
 
-        productPayload.setLoginId(loginId);
         productPayload.setCatalogId(catalogId);
 
-        return productUseCase.addProductToTheCatalog(productPayload);
+        return productUseCase.addProductToTheCatalog(loginId, productPayload);
     }
 
 }

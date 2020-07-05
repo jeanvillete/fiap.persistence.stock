@@ -19,9 +19,6 @@ public class ProductUseCase {
 
     public static class ProductPayload {
 
-        @JsonProperty("login_id")
-        String loginId;
-
         @JsonProperty("entry_date")
         LocalDateTime entryTime;
 
@@ -35,8 +32,7 @@ public class ProductUseCase {
         public ProductPayload() {
         }
 
-        public ProductPayload(String loginId, LocalDateTime entryTime, Integer catalogId, String code, BigDecimal price, Integer quantity) {
-            this.loginId = loginId;
+        public ProductPayload(LocalDateTime entryTime, Integer catalogId, String code, BigDecimal price, Integer quantity) {
             this.entryTime = entryTime;
             this.catalogId = catalogId;
             this.code = code;
@@ -50,14 +46,6 @@ public class ProductUseCase {
 
         public void setCode(String code) {
             this.code = code;
-        }
-
-        public String getLoginId() {
-            return loginId;
-        }
-
-        public void setLoginId(String loginId) {
-            this.loginId = loginId;
         }
 
         public Integer getCatalogId() {
@@ -103,8 +91,8 @@ public class ProductUseCase {
         this.summarizedProductService = summarizedProductService;
     }
 
-    public ProductPayload addProductToTheCatalog(ProductPayload productPayload) throws InvalidSuppliedDataException, CatalogNotFoundException {
-        productService.validLoginId(productPayload.loginId);
+    public ProductPayload addProductToTheCatalog(String loginId, ProductPayload productPayload) throws InvalidSuppliedDataException, CatalogNotFoundException {
+        productService.validLoginId(loginId);
         productService.validPrice(productPayload.getPrice());
         productService.validQuantity(productPayload.getQuantity());
 
@@ -113,7 +101,7 @@ public class ProductUseCase {
         String productCode = productService.figureOutNewProductCode();
 
         Product product = new Product(
-                productPayload.loginId,
+                loginId,
                 catalog,
                 productCode,
                 productPayload.price,
@@ -124,10 +112,9 @@ public class ProductUseCase {
         productService.save(product);
 
         SummarizedProduct summarizedProduct = summarizedProductService.summarizeProduct(product);
-        summarizedProductService.postToStockPortal(productPayload.loginId, summarizedProduct);
+        summarizedProductService.postToStockPortal(loginId, summarizedProduct);
 
         return new ProductPayload(
-                product.getLoginId(),
                 product.getEntryTime(),
                 product.getCatalog().getId(),
                 product.getCode(),
