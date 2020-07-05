@@ -208,7 +208,7 @@ POST stock/users/5ef9589c2994931e98c15365/orders
 - Estoquista requisita listagem de pedidos persistidos
 - A informação ***loginId*** deverá ser recebida via path variable, e refere-se a identificação do estoquista (UserType stock), o que quer dizer que o valor de um login válido efetuado via módulo ***fiap.sample.login*** deve ter sido obtido
     - [validar] deve ser verificado se o ***loginId*** é de fato válido para o tipo (UserType) 'stock'
-- O resultado deve ter o payload a lista completa de todos os pedidos, e devolvido com status ***200 Ok***
+- O resultado deve ter no payload a lista completa de todos os pedidos, e devolvido com status ***200 Ok***
 
 ```$ curl localhost:8282/stock/users/5ef958b02994931e98c15366/orders```
 

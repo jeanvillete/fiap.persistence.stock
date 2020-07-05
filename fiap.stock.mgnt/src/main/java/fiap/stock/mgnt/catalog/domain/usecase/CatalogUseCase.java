@@ -1,6 +1,5 @@
 package fiap.stock.mgnt.catalog.domain.usecase;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import fiap.stock.mgnt.catalog.domain.Catalog;
 import fiap.stock.mgnt.catalog.domain.CatalogService;
 import fiap.stock.mgnt.common.exception.InvalidSuppliedDataException;
@@ -10,19 +9,14 @@ import org.springframework.stereotype.Component;
 public class CatalogUseCase {
 
     public static class CatalogPayload {
-
-        @JsonProperty("login_id")
-        String loginId;
-
         Integer id;
         String description;
 
         public CatalogPayload() {
         }
 
-        public CatalogPayload(Integer id, String loginId, String description) {
+        public CatalogPayload(Integer id, String description) {
             this.id = id;
-            this.loginId = loginId;
             this.description = description;
         }
 
@@ -32,14 +26,6 @@ public class CatalogUseCase {
 
         public void setId(Integer id) {
             this.id = id;
-        }
-
-        public String getLoginId() {
-            return loginId;
-        }
-
-        public void setLoginId(String loginId) {
-            this.loginId = loginId;
         }
 
         public String getDescription() {
@@ -57,13 +43,13 @@ public class CatalogUseCase {
         this.catalogService = catalogService;
     }
 
-    public CatalogPayload insertNewCatalogItem(CatalogPayload catalogPayload) throws InvalidSuppliedDataException {
-        this.catalogService.validLoginId(catalogPayload.loginId);
+    public CatalogPayload insertNewCatalogItem(String loginId, CatalogPayload catalogPayload) throws InvalidSuppliedDataException {
+        this.catalogService.validLoginId(loginId);
 
         this.catalogService.validDescription(catalogPayload.description);
 
         Catalog catalog = new Catalog(
-                catalogPayload.getLoginId(),
+                loginId,
                 catalogPayload.getDescription()
         );
 
@@ -71,7 +57,6 @@ public class CatalogUseCase {
 
         return new CatalogPayload(
                 catalog.getId(),
-                catalog.getLoginId(),
                 catalog.getDescription()
         );
     }

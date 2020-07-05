@@ -18,9 +18,7 @@ public class CatalogController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CatalogUseCase.CatalogPayload insertNewCatalogItem(@PathVariable("loginId") String loginId, @RequestBody CatalogUseCase.CatalogPayload catalogPayload) throws InvalidSuppliedDataException {
-        catalogPayload.setLoginId(loginId);
-
-        return catalogUseCase.insertNewCatalogItem(catalogPayload);
+        return catalogUseCase.insertNewCatalogItem(loginId, catalogPayload);
     }
 
 }
