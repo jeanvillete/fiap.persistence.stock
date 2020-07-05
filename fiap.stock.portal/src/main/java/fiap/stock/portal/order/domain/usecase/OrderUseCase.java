@@ -143,6 +143,16 @@ public class OrderUseCase {
         orderService.updateOrderStatus(orderCode, orderPayload.status);
     }
 
+    public List<OrderPayload> findAllOrders(String loginId) throws InvalidSuppliedDataException {
+        orderService.validLoginId(loginId);
+
+        List<Order> orderList = orderService.findAllByLoginId(loginId);
+
+        return orderList.stream()
+                .map(this::getOrderPayload)
+                .collect(Collectors.toList());
+    }
+
     private OrderPayload getOrderPayload(Order order) {
         List<ProductPayload> productPayloadList = order.getProducts()
                 .stream()

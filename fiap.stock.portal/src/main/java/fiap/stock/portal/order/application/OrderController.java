@@ -6,6 +6,8 @@ import fiap.stock.portal.order.domain.usecase.OrderUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("portal/users/{loginId}/orders")
 public class OrderController {
@@ -34,6 +36,14 @@ public class OrderController {
             throws OrderNotFoundException, InvalidSuppliedDataException {
 
         this.orderUseCase.updateClientOrderStatus(loginId, orderCode, orderPayload);
+    }
+
+    @GetMapping
+    public List<OrderUseCase.OrderPayload> findAllOrders(
+            @PathVariable("loginId") String loginId)
+            throws InvalidSuppliedDataException {
+
+        return orderUseCase.findAllOrders(loginId);
     }
 
 }

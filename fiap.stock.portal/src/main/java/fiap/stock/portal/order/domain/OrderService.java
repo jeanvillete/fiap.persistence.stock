@@ -27,4 +27,6 @@ public interface OrderService {
 
     void updateOrderStatus(String orderCode, OrderStatus status) throws OrderNotFoundException;
 
+    List<Order> findAllByLoginId(String loginId);
+
 }

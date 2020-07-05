@@ -8,6 +8,7 @@ import fiap.stock.portal.product.domain.Product;
 import fiap.stock.portal.product.domain.ProductService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -114,6 +115,12 @@ class OrderServiceImpl implements OrderService {
 
         order.setOrderStatus(status);
         save(order);
+    }
+
+    @Override
+    public List<Order> findAllByLoginId(String loginId) {
+        return orderRepository.findAllByLoginId(loginId)
+            .orElse(Collections.emptyList());
     }
 
 }
