@@ -100,7 +100,7 @@ Abaixo segue a lista de casos de uso e exemplos de requisições e respostas;
 
 ```
 [request]
-PUT stock/users/5ef958b02994931e98c15366/catalogs
+POST stock/users/5ef958b02994931e98c15366/catalogs
 {
     "description": "sample product description"
 }
@@ -177,7 +177,7 @@ POST stock/users/5ef958b02994931e98c15366/catalogs/123/products
 
 ```
 [request]
-PUT stock/users/5ef9589c2994931e98c15365/orders
+POST stock/users/5ef9589c2994931e98c15365/orders
 {
     "code": "ORD-4569877",
     "products: [
