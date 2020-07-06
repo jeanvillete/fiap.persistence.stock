@@ -15,7 +15,7 @@ as definições de propriedades e configurações de porta ***(atual 8383)*** do
 
     host: localhost
     port: 27017
-    database: fiapSampleLogin
+    database: fiapStockPortal
 
 **Redis**
 

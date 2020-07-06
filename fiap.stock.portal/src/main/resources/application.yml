@@ -6,7 +6,7 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: fiapSampleLogin
+      database: fiapStockPortal
   main:
     banner-mode: console
 
