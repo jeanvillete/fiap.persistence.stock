@@ -16,3 +16,7 @@ A instrução de execução de cada módulo está nos seus subdiretórios.
 Uma vez com todos os módulos no ar, o script ``` test-script.sh ```, na raiz do projeto base, apresenta os vários casos de uso com seus endpoints, e o que é esperado de comportamento. 
 
 ---
+
+# 3 - diagrama de componentes
+
+![](fiap.persistence.stock.png)
