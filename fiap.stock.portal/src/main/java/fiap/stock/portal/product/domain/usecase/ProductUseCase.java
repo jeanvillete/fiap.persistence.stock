@@ -27,6 +27,9 @@ public class ProductUseCase {
         @JsonProperty
         Integer quantity;
 
+        public ProductPayload() {
+        }
+
         public ProductPayload(String code, String description, BigDecimal price) {
             this.code = code;
             this.description = description;

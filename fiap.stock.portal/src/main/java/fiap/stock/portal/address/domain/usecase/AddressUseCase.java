@@ -32,6 +32,9 @@ public class AddressUseCase {
         @JsonProperty
         String country;
 
+        public AddressPayload() {
+        }
+
         public AddressPayload(Address address) {
             this.code = address.getId();
             this.zipCode = address.getZipCode();

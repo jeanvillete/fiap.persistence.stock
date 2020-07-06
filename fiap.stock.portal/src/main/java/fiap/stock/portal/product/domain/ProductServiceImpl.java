@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Service
 class ProductServiceImpl implements ProductService {
 
-    private static final String CACHE_KEY = "USER_LOGIN_CACHE";
+    private static final String CACHE_KEY = "PRD_PORTAL_CACHE";
     private static final String PROD_PREFIX = "PRD-";
 
     private final ProductRepository productRepository;

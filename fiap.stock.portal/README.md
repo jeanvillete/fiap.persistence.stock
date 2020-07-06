@@ -175,13 +175,13 @@ GET portal/users/5ef958b02994931e98c15366/products/PRD-9876543
 - O resultado deve ter o payload com os dados adicionais, e devolvido com status ***201 Created***
     - ***code*** (código gerido internamente)
 
-```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses -d '{ "zip_code": "123456-789", "complement": "Cond Azul, Bl A Apt 123", "city": "São Paulo", "state": "São Paulo", "country": "Brasil" }' -H 'Content-Type: application/json' ```
+```$ curl localhost:8383/portal/users/5ef9589c2994931e98c15365/addresses -d '{ "zip_code": "12345-678", "complement": "Cond Azul, Bl A Apt 123", "city": "São Paulo", "state": "São Paulo", "country": "Brasil" }' -H 'Content-Type: application/json' ```
 
 ```
 [request]
 POST portal/users/5ef9589c2994931e98c15365/addresses
 {
-    "zip_code": "123456-789",
+    "zip_code": "12345-678",
     "complement": "Cond Azul, Bl A Apt 123",
     "city": "São Paulo",
     "state": "São Paulo",
