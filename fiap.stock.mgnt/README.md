@@ -1,14 +1,14 @@
 # 1 -intro
 
 - O projeto corrente tem por responsabilidade manter registros de catálogo e seus correspondentes produtos dentro do estoque, além disto, quando chegar uma requisição de um pedido, o estoquista deve confirmar o pedido, indicando que o item foi encontrado no estoque e que o fluxo da compra pode continuar, onde neste caso de exemplo, seria dada como compra concluída e produto entregue.
-- O banco de dados utilizado é o **MySQL (RDMBS/transacional)** e na camada de Service apenas para o domínio de Produto é utilizado o **Spring Cache com Redis** para otimizar seu encontro rápido por código, que é necessário quando chega um pedido.
+- O banco de dados utilizado é o **MySQL (RDMBS/transacional)**.
 - Os casos de uso abaixo determinam quais os serviços RESTful são expostos
 
 ---
 
 #### 1.1 - execução
 
-As definições de propriedades e configurações de porta ***(atual 8282)*** do servidor da aplicação corrente, do banco de dados **MySQL** e **Redis** estão no artefato ```application.yml```
+As definições de propriedades e configurações de porta ***(atual 8282)*** do servidor da aplicação corrente e do banco de dados **MySQL** estão no artefato ```application.yml```
 
 **MySQL**
 
@@ -17,11 +17,6 @@ As definições de propriedades e configurações de porta ***(atual 8282)*** do
     password: fiap-persistencepwd
     driver-class-name: com.mysql.jdbc.Driver
     platform: org.hibernate.dialect.MySQL5InnoDBDialect
-
-**Redis**
-
-    host: localhost
-    port: 6379
 
 ---
 
@@ -49,7 +44,7 @@ O domínio produto gerencia na sua tabela os dados;
 - ***quantity*** campo mandatório, campo inteiro
 - ***entry_date*** campo calculado e persistido no insert do produto
   
-Este domínio é persistido permanentemente na base de dados **MySQL**, e é gerido no cache afim de ser encontrado rapidamente por ***code***, com operações PUT, EVICT e um TTL de **5min**, cache mantido através do **Spring Cache com Redis**.
+Este domínio é persistido permanentemente na base de dados **MySQL**, sem nenhum reflexo/gerencia em cache.
 
 #
 
