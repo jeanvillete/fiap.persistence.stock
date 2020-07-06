@@ -16,3 +16,8 @@ logging:
 stock:
   mgnt:
     host: http://localhost:8282/
+
+redis:
+  host: localhost
+  port: 6379
+  password:

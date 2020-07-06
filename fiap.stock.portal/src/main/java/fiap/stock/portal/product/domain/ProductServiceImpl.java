@@ -2,6 +2,9 @@ package fiap.stock.portal.product.domain;
 
 import fiap.stock.portal.common.exception.InvalidSuppliedDataException;
 import fiap.stock.portal.product.domain.exception.ProductNotFoundException;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,6 +15,7 @@ import java.util.regex.Pattern;
 @Service
 class ProductServiceImpl implements ProductService {
 
+    private static final String CACHE_KEY = "USER_LOGIN_CACHE";
     private static final String PROD_PREFIX = "PRD-";
 
     private final ProductRepository productRepository;
@@ -68,12 +72,14 @@ class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value = CACHE_KEY, key = "{#code}")
     public Product findByCode(String code) throws ProductNotFoundException {
         return productRepository.findByCode(code)
             .orElseThrow(() -> new ProductNotFoundException("No product could be found for the code [" + code + "]"));
     }
 
     @Override
+    @Caching(evict = {@CacheEvict(value = CACHE_KEY, allEntries = true)})
     public void save(Product product) {
         productRepository.save(product);
     }
