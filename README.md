@@ -8,6 +8,11 @@ O projeto corrente atende ao trabalho da matéria ***Persistence***, que propõe
 ###### Prof.: RAFAEL MATSUYAMA
 ###### Aluno / RM: JEAN BRUNO SOUTO VILLETE / 335435
 
-> O projeto é versionado no github através do repositório [github.com/jeanvillete/fiap.persistence.stock](https://github.com/jeanvillete/fiap.persistence.stock)  
+---
+
+# 2 - execução
+
+A instrução de execução de cada módulo está nos seus subdiretórios.
+Uma vez com todos os módulos no ar, o script ``` test-script.sh ```, na raiz do projeto base, apresenta os vários casos de uso com seus endpoints, e o que é esperado de comportamento. 
 
 ---
